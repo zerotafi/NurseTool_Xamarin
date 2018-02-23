@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2010
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "NurseTool_Xamarin", "NurseTool_Xamarin\NurseTool_Xamarin\NurseTool_Xamarin.shproj", "{340AD883-0E28-4A6F-9DD9-13B603ACB2BD}"
 EndProject
@@ -15,6 +15,7 @@ Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		NurseTool_Xamarin\NurseTool_Xamarin\NurseTool_Xamarin.projitems*{1fa5de7f-870a-486e-98de-e3406bd15d01}*SharedItemsImports = 4
 		NurseTool_Xamarin\NurseTool_Xamarin\NurseTool_Xamarin.projitems*{340ad883-0e28-4a6f-9dd9-13b603acb2bd}*SharedItemsImports = 13
+		NurseTool_Xamarin\NurseTool_Xamarin\NurseTool_Xamarin.projitems*{df8e6988-d8c0-45de-8606-d8f49b820fd9}*SharedItemsImports = 4
 		NurseTool_Xamarin\NurseTool_Xamarin\NurseTool_Xamarin.projitems*{e0a27946-1da9-4ad3-b825-c8aa74666378}*SharedItemsImports = 4
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
