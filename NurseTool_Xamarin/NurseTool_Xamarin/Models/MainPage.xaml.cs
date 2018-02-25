@@ -12,6 +12,13 @@ namespace NurseTool_Xamarin
 		public MainPage()
 		{
 			InitializeComponent();
+            // DependencyService built in dependency injection service.
+            // this.PatRegButton
 		}
-	}
+
+        private void Button_Clicked(object sender, EventArgs e)
+        {
+
+        }
+    }
 }
