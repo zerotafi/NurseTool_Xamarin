@@ -12,16 +12,19 @@
     <Compile Include="$(MSBuildThisFileDirectory)App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Models\MainPage.xaml.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Models\PatientRegistration.xaml.cs">
+    <Compile Include="$(MSBuildThisFileDirectory)Pages\PatientRegistration.xaml.cs">
       <DependentUpon>PatientRegistration.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\Main_ViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\MyBase_ViewModel.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)ViewModels\PatRegViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Models\MainPage.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Pages\MainPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -31,7 +34,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Models\PatientRegistration.xaml">
+    <EmbeddedResource Include="$(MSBuildThisFileDirectory)Pages\PatientRegistration.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -42,7 +45,6 @@
     <Folder Include="$(MSBuildThisFileDirectory)Auxiliary\Resources\" />
     <Folder Include="$(MSBuildThisFileDirectory)Models\" />
     <Folder Include="$(MSBuildThisFileDirectory)Design Time\" />
-    <Folder Include="$(MSBuildThisFileDirectory)Views\" />
-    <Folder Include="$(MSBuildThisFileDirectory)ViewModels\" />
+    <Folder Include="$(MSBuildThisFileDirectory)Pages\" />
   </ItemGroup>
 </Project>
