@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using NHapi;
+//using NHapi;
 
 namespace NurseTool_Xamarin.Helpers
 {
