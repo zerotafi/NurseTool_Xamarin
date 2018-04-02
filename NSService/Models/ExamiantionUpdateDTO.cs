@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace NSService.Models
 {
-    public class ExaminationCreationDTO
+    public class ExamiantionUpdateDTO
     {
-        [Required(ErrorMessage ="PatientId is not vaild!")]
+        [Required(ErrorMessage = "PatientId is not vaild!")]
         public int PatientId { get; set; }
 
         [MaxLength(200)]
