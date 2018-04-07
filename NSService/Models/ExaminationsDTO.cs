@@ -13,7 +13,7 @@ namespace NSService.Models
 
         public string Description { get; set; }
 
-        public string Type { get; set; }
+        public string ExaminationType { get; set; }
 
         public string Value { get; set; }
 

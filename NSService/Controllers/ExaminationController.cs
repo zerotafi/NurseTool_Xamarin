@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NSService.Models;
+using NSService.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,17 +13,36 @@ namespace NSService.Controllers
     [Route("api/patients")]
     public class ExaminationController : Controller
     {
+        private ILogger<ExaminationController> _logger;
+
+        private IPatientInfoRepository _patientInfoRepository;
+
+        public ExaminationController(ILogger<ExaminationController> logger, IPatientInfoRepository patientInfoRepository)
+        {
+            _logger = logger;
+            _patientInfoRepository = patientInfoRepository;
+        }
+
         [HttpGet("{patientId}/examination")]
         public IActionResult GetExaminations(int patientId)
         {
-            var patient = PatientDataStore.Current.Patients.FirstOrDefault(x => x.Id == patientId);
-
-            if(patient == null)
+            try
             {
-                return NotFound();
-            }
+                var exams = _patientInfoRepository.GetExaminations(patientId);
 
-            return Ok(patient.Examinations);
+                if (exams == null)
+                {
+                    _logger.LogInformation("Patient not exist PatientID: " + patientId);
+                    return NotFound();
+                }
+
+                return Ok(exams);
+            }
+            catch(Exception ex)
+            {
+                _logger.LogCritical("GetExaminations() Error: " + ex.Message.ToString());
+                return StatusCode(500, "Internal Server Error");
+            }
         }
 
         [HttpGet("{patientId}/examination/{exmiantionId}", Name = "GetExamination")]
@@ -105,7 +126,7 @@ namespace NSService.Controllers
                 return NotFound();
             }
             examination.Description = examinationDTO.Description;
-            examination.Type = examinationDTO.Type;
+            examination.ExaminationType = examinationDTO.Type;
             examination.Value = examinationDTO.Value;
 
             return NoContent();
