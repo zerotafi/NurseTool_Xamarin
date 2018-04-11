@@ -22,6 +22,11 @@ namespace NSService.Services
             return _context.Patients.Any(x => x.Id == patientId);
         }
 
+        public void AddPatient(Patient patient)
+        {
+            _context.Patients.Add(patient);
+        }
+
         public Examination GetExamination(int patientId, int examinationId)
         {
             return _context.Patients.FirstOrDefault(x => x.Id == patientId).Examinations.FirstOrDefault(x => x.Id == examinationId);
@@ -36,7 +41,7 @@ namespace NSService.Services
         {
             if (includeExaminations)
             {
-               return _context.Patients.Include(x => x.Examinations).Where(x => x.Id == patientId).FirstOrDefault();
+                return _context.Patients.Include(x => x.Examinations).Where(x => x.Id == patientId).FirstOrDefault();
             }
             else
             {
@@ -47,6 +52,23 @@ namespace NSService.Services
         public IEnumerable<Patient> GetPatients()
         {
             return _context.Patients.OrderBy(x => x.Name).ToList();
+        }
+
+
+        public void AddExaminationToPatient(int patientId, Examination exam)
+        {
+            var patient = GetPatient(patientId, true);
+            patient.Examinations.Add(exam);
+        }
+
+        public void DeleteExam(Examination exam)
+        {
+            _context.Examinations.Remove(exam);
+        }
+
+        public bool Save()
+        {
+            return (_context.SaveChanges() >= 0);
         }
     }
 }

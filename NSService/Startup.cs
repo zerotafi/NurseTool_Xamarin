@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -15,6 +16,8 @@ using NLog;
 using NLog.Extensions.Logging;
 using NSService.Entities;
 using NSService.Services;
+using SuperSocket.SocketBase;
+using SuperSocket.SocketEngine;
 
 namespace NSService
 {
@@ -22,12 +25,21 @@ namespace NSService
     {
         public static IConfigurationRoot Configuration;
 
+        HL7CommunicationService HL7CommunicationService;
+
         public Startup(IHostingEnvironment env)
         {
             var builder = new ConfigurationBuilder().SetBasePath(env.ContentRootPath)
                 .AddJsonFile("appSettings.json", optional: false, reloadOnChange: true);
 
             Configuration = builder.Build();
+            var mllpHostname = Startup.Configuration["mllpClientHost:mllpHostname"];
+            int mllpPortNumber = Convert.ToInt32(Startup.Configuration["mllpClientPort:mllpPortNumber"]);
+
+
+           // HL7CommunicationService = new HL7CommunicationService(mllpHostname, mllpPortNumber);
+
+            StartHL7Listener();
         }
 
 
@@ -37,10 +49,9 @@ namespace NSService
         {
             services.AddMvc();
             // services.AddTransient<LocalService>();
-            var connectionString = Startup.Configuration["connectionString:NsToolConnectionString"]; // @"Server=(localdb)\MSSQLLocalDB;Database=NSToolDb;Trusted_Connection=true;";
+            var connectionString = Startup.Configuration["connectionString:NsToolConnectionString"];
             services.AddDbContext<PatientInfoContext>(o => o.UseSqlServer(connectionString));
             services.AddScoped<IPatientInfoRepository, PatientInfoRepository>();
-            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,13 +73,56 @@ namespace NSService
                 app.UseDeveloperExceptionPage();
             }
 
+            AutoMapper.Mapper.Initialize(cfg => {
+                cfg.CreateMap<Entities.Patient, Models.PatientWithoutExaminationDTO>();
+                cfg.CreateMap<Entities.Patient, Models.PatientDTO>();
+                cfg.CreateMap<Entities.Patient, Models.PatientCreationDTO>();
+                cfg.CreateMap<Models.PatientCreationDTO, Entities.Patient>();
+
+                cfg.CreateMap<Entities.Examination, Models.ExaminationsDTO>();
+                cfg.CreateMap<Models.ExaminationCreationDTO, Entities.Examination>();
+                cfg.CreateMap<Models.ExamiantionUpdateDTO,Entities.Examination>();
+                cfg.CreateMap< Entities.Examination, Models.ExamiantionUpdateDTO>();
+
+            });
+
             app.UseMvc();
             app.UseStatusCodePages();
 
             app.Run(async (context) =>
             {
-                await context.Response.WriteAsync("Hello World!");
+                await context.Response.WriteAsync("");
             });
+        }
+
+        public void StartHL7Listener()
+        {
+            
+            IBootstrap bootstrap = BootstrapFactory.CreateBootstrap();
+            while (!bootstrap.Initialize())
+            {
+                Thread.Sleep(1000);
+            }
+
+            if (!bootstrap.Initialize())
+            {
+                // To Raise Error.
+            }
+            else
+            {
+                StartResult startResult = bootstrap.Start();
+                foreach (IWorkItem workItem in bootstrap.AppServers)
+                {
+                    // To Log out these items.
+                    if (workItem.State == ServerState.Running)
+                    {
+                    }
+                    else
+                    {
+                    }
+                }
+            }
+
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using NSService.Models;
 using NSService.Services;
 using System;
@@ -22,18 +23,8 @@ namespace NSService.Controllers
         public IActionResult GetAllPatient()
         {
             var patients = _patientInfoRepository.GetPatients();
-            var result = new List<PatientWithoutExaminationDTO>();
+            var result = Mapper.Map<IEnumerable<PatientWithoutExaminationDTO>>(patients);
 
-            foreach (var patient in patients)
-            {
-                result.Add( new PatientWithoutExaminationDTO()
-                {
-                    Age = patient.Age,
-                    Gender = patient.Gender,
-                    Id = patient.Id,
-                    Name = patient.Name
-                });
-            }
             return Ok(result);
         }
 
@@ -46,41 +37,43 @@ namespace NSService.Controllers
 
             if (includeExaminations)
             {
-                var patientResult = new PatientDTO()
-                {
-                    Age = patient.Age,
-                    Gender = patient.Gender,
-                    Id = patient.Id,
-                    Name = patient.Name
-                };
+                var patientResult = Mapper.Map<PatientDTO>(patient);
 
-                foreach (var exam in patient.Examinations)
-                {
-                    patientResult.Examinations.Add(
-                        new ExaminationsDTO()
-                        {
-                            Description = exam.Description,
-                            Id = exam.Id,
-                            PatientId = exam.PatientId,
-                            ExaminationType = exam.ExaminationType,
-                            Value = exam.Value
-                        });
-                }
                 return Ok(patientResult);
             }
             else
             {
-                var patientResult = new PatientDTO()
-                {
-                    Age = patient.Age,
-                    Gender = patient.Gender,
-                    Id = patient.Id,
-                    Name = patient.Name
-                };
+                var patientResult = Mapper.Map<PatientWithoutExaminationDTO>(patient);
 
                 return Ok(patientResult);
             }
         }
 
+        [HttpPost("")]
+        public IActionResult CreatePatient([FromBody] PatientCreationDTO patientDTO)
+        {
+            if (patientDTO == null)
+            {
+                BadRequest();
+            }
+
+            if (!ModelState.IsValid)
+            {
+                BadRequest();
+            }
+
+            var pateitnToAdd = Mapper.Map<Entities.Patient>(patientDTO);
+
+            _patientInfoRepository.AddPatient(pateitnToAdd);
+
+            if (!_patientInfoRepository.Save())
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+
+            var patientToAddResult = Mapper.Map<PatientCreationDTO>(pateitnToAdd);
+
+            return CreatedAtRoute("GetExamination", new { patientID = pateitnToAdd.Id, patientToAddResult });
+        }
     }
 }

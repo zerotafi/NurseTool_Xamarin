@@ -14,7 +14,7 @@ namespace NSService.Models
         [MaxLength(200)]
         public string Description { get; set; }
 
-        public string Type { get; set; }
+        public string ExaminationType { get; set; }
 
         public string Value { get; set; }
     }

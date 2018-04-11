@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NurseTool_Xamarin.UWP", "..
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NurseTool_Xamarin", "..\NurseTool\NurseTool_Xamarin\NurseTool_Xamarin\NurseTool_Xamarin.csproj", "{2FAEA06B-DBCA-4BD7-8BC5-B72EE15C5B53}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NSService", "NSService\NSService.csproj", "{3AEA4EF2-B637-47E4-B694-CAEB5EEA821F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NSService", "NSService\NSService.csproj", "{3AEA4EF2-B637-47E4-B694-CAEB5EEA821F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

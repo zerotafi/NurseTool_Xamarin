@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSService.Models;
@@ -28,15 +29,23 @@ namespace NSService.Controllers
         {
             try
             {
-                var exams = _patientInfoRepository.GetExaminations(patientId);
-
-                if (exams == null)
+                if (!_patientInfoRepository.PatientExists(patientId))
                 {
                     _logger.LogInformation("Patient not exist PatientID: " + patientId);
                     return NotFound();
                 }
 
-                return Ok(exams);
+                var exams = _patientInfoRepository.GetExaminations(patientId);
+
+                if (exams == null)
+                {
+                    _logger.LogInformation("Exams not found PatientID: " + patientId);
+                    return NotFound();
+                }
+
+                var examsDTOList = Mapper.Map<ExaminationsDTO>(exams); 
+
+                return Ok(examsDTOList);
             }
             catch(Exception ex)
             {
@@ -62,7 +71,9 @@ namespace NSService.Controllers
                 return NotFound();
             }
 
-            return Ok(examination);
+            var examinationResult = Mapper.Map<ExaminationsDTO>(examination);
+
+            return Ok(examinationResult);
 
         }
 
@@ -79,24 +90,23 @@ namespace NSService.Controllers
                 BadRequest();
             }
 
-            var patient = PatientDataStore.Current.Patients.FirstOrDefault(x => x.Id == patientId);
-
-            if (patient == null)
-            {
+            if (!_patientInfoRepository.PatientExists(patientId))
+            { 
                 return NotFound();
             }
 
-            var maxID = PatientDataStore.Current.Patients.SelectMany(x => x.Examinations).Max(p => p.Id);
-            var ExaminationNew = new ExaminationsDTO()
-            {
-                 Id = maxID+1,
-                 Description = "BloodPresure",
-                 PatientId = patientId,
-                 Value = "Test new Examination"
-            };
-            patient.Examinations.Add(ExaminationNew);
+            var ExaminationNew = Mapper.Map<Entities.Examination>(examinationDTO);
 
-            return CreatedAtRoute("GetExamination", new { patientID = patientId , id = maxID , ExaminationNew });
+            _patientInfoRepository.AddExaminationToPatient(patientId, ExaminationNew);
+
+            if (!_patientInfoRepository.Save())
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+
+            var ExaminationResult = Mapper.Map<ExaminationCreationDTO>(ExaminationNew);
+
+            return CreatedAtRoute("GetExamination", new { patientID = patientId , ExaminationResult });
         }
 
         [HttpPut("{patientId}/examination/{exmiantionId}")]
@@ -112,26 +122,26 @@ namespace NSService.Controllers
                 BadRequest();
             }
 
-            var patient = PatientDataStore.Current.Patients.FirstOrDefault(x => x.Id == patientId);
-
-            if (patient == null)
+            if (_patientInfoRepository.PatientExists(patientId))
             {
                 return NotFound();
             }
 
-            var examination = patient.Examinations.FirstOrDefault(x => x.Id == exmiantionId);
-            
+            var examination = _patientInfoRepository.GetExamination(patientId, exmiantionId); 
+
             if (examination == null)
             {
                 return NotFound();
             }
-            examination.Description = examinationDTO.Description;
-            examination.ExaminationType = examinationDTO.Type;
-            examination.Value = examinationDTO.Value;
+
+            Mapper.Map(examinationDTO, examination);
+
+            if (!_patientInfoRepository.Save())
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
 
             return NoContent();
-
-
         }
 
         [HttpPatch("{patientId}/examination/{exmiantionId}")]
@@ -146,20 +156,19 @@ namespace NSService.Controllers
                 BadRequest();
             }
 
-            var patient = PatientDataStore.Current.Patients.FirstOrDefault(x => x.Id == patientId);
+            if (_patientInfoRepository.PatientExists(patientId))
+            {
+                return NotFound();
+            }
 
-            var examination = patient.Examinations.FirstOrDefault(x => x.Id == exmiantionId);
+            var examination = _patientInfoRepository.GetExamination(patientId, exmiantionId);
 
             if (examination == null)
             {
                 return NotFound();
             }
 
-            var examinationToPatch = new ExamiantionUpdateDTO()
-            {
-                Description = examination.Description,
-                Value = examination.Value
-            };
+            var examinationToPatch = Mapper.Map<ExamiantionUpdateDTO>(examination); 
 
             patchDoc.ApplyTo(examinationToPatch);
 
@@ -167,27 +176,35 @@ namespace NSService.Controllers
             {
                 BadRequest();
             }
+
+            Mapper.Map(examinationToPatch, examination);
+
+            if (!_patientInfoRepository.Save())
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
             return NoContent();
         }
 
         [HttpDelete("{patientId}/examination/{exmiantionId}")]
         public IActionResult DeleteExamiantion(int patientId, int exmiantionId)
         {
-            var patient = PatientDataStore.Current.Patients.FirstOrDefault(x => x.Id == patientId);
-
-            if (patient == null)
+            if (_patientInfoRepository.PatientExists(patientId))
             {
                 return NotFound();
             }
 
-            var examination = patient.Examinations.FirstOrDefault(x => x.Id == exmiantionId);
+            var examination = _patientInfoRepository.GetExamination(patientId, exmiantionId);
 
             if (examination == null)
             {
                 return NotFound();
             }
-
-            patient.Examinations.Remove(examination);
+            _patientInfoRepository.DeleteExam(examination);
+            if (!_patientInfoRepository.Save())
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
 
             return NoContent();
         }

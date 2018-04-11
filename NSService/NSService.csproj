@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <UserSecretsId>7e79fa1a-a56c-483a-9dd6-858b29e2a3bb</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
@@ -9,12 +10,27 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="6.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" />
+    <PackageReference Include="nHapi" Version="2.5.0.6" />
+    <PackageReference Include="NHapiTools" Version="1.9.0" />
     <PackageReference Include="NLog" Version="4.5.0" />
     <PackageReference Include="NLog.Config" Version="4.5.0" />
     <PackageReference Include="NLog.Extensions.Logging" Version="1.0.0" />
+    <PackageReference Include="runtime.any.System.Diagnostics.Tools" Version="4.0.1" />
+    <PackageReference Include="SuperSocket" Version="1.6.6.1" />
+    <PackageReference Include="SuperSocket.ClientEngine.Core" Version="0.10.0" />
+    <PackageReference Include="SuperSocket.SocketEngine-unofficial" Version="1.6.4.3" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Configuration">
+      <HintPath>..\..\..\..\..\..\Windows\Microsoft.NET\Framework64\v4.0.30319\System.Configuration.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
