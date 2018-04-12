@@ -98,30 +98,30 @@ namespace NSService
         public void StartHL7Listener()
         {
             
-            IBootstrap bootstrap = BootstrapFactory.CreateBootstrap();
-            while (!bootstrap.Initialize())
-            {
-                Thread.Sleep(1000);
-            }
+            //IBootstrap bootstrap = BootstrapFactory.CreateBootstrap();
+            //while (!bootstrap.Initialize())
+            //{
+            //    Thread.Sleep(1000);
+            //}
 
-            if (!bootstrap.Initialize())
-            {
-                // To Raise Error.
-            }
-            else
-            {
-                StartResult startResult = bootstrap.Start();
-                foreach (IWorkItem workItem in bootstrap.AppServers)
-                {
-                    // To Log out these items.
-                    if (workItem.State == ServerState.Running)
-                    {
-                    }
-                    else
-                    {
-                    }
-                }
-            }
+            //if (!bootstrap.Initialize())
+            //{
+            //    // To Raise Error.
+            //}
+            //else
+            //{
+            //    StartResult startResult = bootstrap.Start();
+            //    foreach (IWorkItem workItem in bootstrap.AppServers)
+            //    {
+            //        // To Log out these items.
+            //        if (workItem.State == ServerState.Running)
+            //        {
+            //        }
+            //        else
+            //        {
+            //        }
+            //    }
+            //}
 
         }
     }

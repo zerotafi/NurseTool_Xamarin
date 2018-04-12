@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,16 +18,25 @@ namespace NSService.Controllers
         // Test class.
         SimpleMLLPClient mllpClient; // = new SimpleMLLPClient(hostname, port);
 
-
         [HttpGet()]
-        public IActionResult GetAllPatient()
+        [HttpPost()]
+        public IActionResult HL7messageFromServer([FromHeader] string content)
         {
+            String hl7MessageRaw;
+
+            using (Stream Body = HttpContext.Request.Body)
+            {
+                hl7MessageRaw = new StreamReader(HttpContext.Request.Body).ReadToEnd();
+            }
+
+            // Test Code.
+
             string hostname = "localhost";
             int port = 2020;
             mllpClient = new SimpleMLLPClient(hostname, port, System.Text.Encoding.UTF8);
 
             string testMessage =
-                   @"MSH|^~\&|OAZIS||||20140202232501||ADT^A04|07112951|P|2.3||||||ASCII"
+                   @"MSH|^~\&|OAZIS||||201[FromBody] 40202232501||ADT^A04|07112951|P|2.3||||||ASCII"
                    +"EVN | A04 | 20140202232501 |||| 201402022324"
                    +"PID | 1 || 9012214504 | 90122124631 ^^^^ NN | Kasmi ^ Nora ^^^ Mevr.|| 19901221 | F ||| Borsbeeksesteenweg 96 ^^ DEURNE(ANTWERPEN) ^^ 2100 ^ B ^ H || 0496076965 ^^ CP || NL | 0 || 16037779 ^^^^ VN | 896076704 | 90122124631 |||||| B |||| N"
                    +"PD1 |||| 115854 ^ Claeys ^ Margaretha |||||||| N"

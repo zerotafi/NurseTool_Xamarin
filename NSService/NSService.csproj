@@ -22,9 +22,9 @@
     <PackageReference Include="NLog.Extensions.Logging" Version="1.0.0" />
     <PackageReference Include="runtime.any.System.Diagnostics.Tools" Version="4.0.1" />
     <PackageReference Include="SuperSocket" Version="1.6.6.1" />
-    <PackageReference Include="SuperSocket.ClientEngine.Core" Version="0.10.0" />
-    <PackageReference Include="SuperSocket.SocketEngine-unofficial" Version="1.6.4.3" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.4.1" />
+    <PackageReference Include="SuperSocket.Engine" Version="1.6.6.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="4.5.0-preview2-26406-04" />
+    <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="4.5.0-preview2-26406-04" />
   </ItemGroup>
 
   <ItemGroup>
