@@ -12,5 +12,11 @@ namespace NSService.Models
         public int Age { get; set; }
 
         public string Gender { get; set; }
+
+        public DateTime BirthDate { get; set; }
+
+        public int ExternalId { get; set; }
+
+        public string Address { get; set; }
     }
 }

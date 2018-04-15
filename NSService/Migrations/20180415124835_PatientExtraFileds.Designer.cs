@@ -11,9 +11,10 @@ using System;
 namespace NSService.Migrations
 {
     [DbContext(typeof(PatientInfoContext))]
-    partial class PatientInfoContextModelSnapshot : ModelSnapshot
+    [Migration("20180415124835_PatientExtraFileds")]
+    partial class PatientExtraFileds
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,19 +48,11 @@ namespace NSService.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<string>("Address");
-
                     b.Property<int>("Age");
-
-                    b.Property<DateTime>("BirthDate");
-
-                    b.Property<int>("ExternalId");
 
                     b.Property<string>("Gender");
 
                     b.Property<string>("Name");
-
-                    b.Property<string>("OriginalHL7Message");
 
                     b.HasKey("Id");
 

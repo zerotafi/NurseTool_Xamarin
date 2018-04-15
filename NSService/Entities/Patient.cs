@@ -19,6 +19,14 @@ namespace NSService.Entities
 
         public string Gender { get; set; }
 
+        public int ExternalId { get; set; }
+
+        public string OriginalHL7Message { get; set; }
+
+        public DateTime BirthDate { get; set; }
+
+        public string Address { get; set; }
+
         public ICollection<Examination> Examinations { get; set; } = new List<Examination>();
     }
 }

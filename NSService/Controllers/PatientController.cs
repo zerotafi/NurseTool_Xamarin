@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using NSService.Models;
 using NSService.Services;
 using System;
@@ -13,10 +14,12 @@ namespace NSService.Controllers
     public class PatientController : Controller
     {
         private IPatientInfoRepository _patientInfoRepository;
+        private ILogger<ExaminationController> _logger;
 
-        public PatientController(IPatientInfoRepository patientInfoRepository)
+        public PatientController(ILogger<ExaminationController> logger, IPatientInfoRepository patientInfoRepository)
         {
             _patientInfoRepository = patientInfoRepository;
+            _logger = logger;
         }
 
         [HttpGet()]

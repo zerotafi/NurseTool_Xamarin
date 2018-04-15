@@ -15,8 +15,8 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="2.0.2" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.0.2" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" />
-    <PackageReference Include="nHapi" Version="2.5.0.6" />
-    <PackageReference Include="NHapiTools" Version="1.9.0" />
+    <PackageReference Include="nHapi" Version="2.4.0.10" />
+    <PackageReference Include="NHapiTools" Version="1.6.0.1" />
     <PackageReference Include="NLog" Version="4.5.0" />
     <PackageReference Include="NLog.Config" Version="4.5.0" />
     <PackageReference Include="NLog.Extensions.Logging" Version="1.0.0" />

@@ -36,8 +36,7 @@ namespace NSService
             var mllpHostname = Startup.Configuration["mllpClientHost:mllpHostname"];
             int mllpPortNumber = Convert.ToInt32(Startup.Configuration["mllpClientPort:mllpPortNumber"]);
 
-
-           // HL7CommunicationService = new HL7CommunicationService(mllpHostname, mllpPortNumber);
+            HL7CommunicationService = new HL7CommunicationService(mllpHostname, mllpPortNumber);
 
             StartHL7Listener();
         }
@@ -52,6 +51,7 @@ namespace NSService
             var connectionString = Startup.Configuration["connectionString:NsToolConnectionString"];
             services.AddDbContext<PatientInfoContext>(o => o.UseSqlServer(connectionString));
             services.AddScoped<IPatientInfoRepository, PatientInfoRepository>();
+           // services.AddScoped<HL7CommunicationService, HL7CommunicationService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
