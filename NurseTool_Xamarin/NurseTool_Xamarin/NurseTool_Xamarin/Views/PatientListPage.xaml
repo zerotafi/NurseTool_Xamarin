@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:local="clr-namespace:NurseTool_Xamarin"
+             x:Class="NurseTool_Xamarin.Views.PatientListPage" x:Name="MyPage">
+    <ContentPage.Content Padding="0" >
+        <Grid  BackgroundColor="#6dafad">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="AUTO" />
+                <RowDefinition Height="AUTO" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <ScrollView Orientation="Horizontal" BackgroundColor="#f9fffe">
+                <ListView Grid.Row ="0" ItemSelected="PatientLsitviewItemSelected"
+                    ItemsSource="{Binding PatietnList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text ="{Binding name}" Detail="{Binding id}"
+                          TextColor="Black"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollView>
+
+            <Entry Grid.Row ="1" Placeholder ="Input a new name" Text ="{Binding Name}"/>
+            <Button Grid.Row ="2" Text ="Send" Command="{Binding ButtonClick}" BackgroundColor="#447b9b"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

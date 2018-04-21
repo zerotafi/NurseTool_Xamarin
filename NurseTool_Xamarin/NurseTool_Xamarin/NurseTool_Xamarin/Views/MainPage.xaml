@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NurseTool_Xamarin.MainPage" >
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="backgroundColor">#33302E</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content Padding="0" >
+        <Grid RowSpacing="0" ColumnSpacing="0" BackgroundColor="#def4f7">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Image
+                x:Name="MedicalImage"
+                Grid.Row="0"
+                Grid.ColumnSpan="2"
+				Source="Mainbackground.jpg"
+                Aspect="AspectFit"
+				HorizontalOptions="FillAndExpand" 
+				VerticalOptions ="FillAndExpand"/>
+            <Button 
+				x:Name="SelectPatientButton"
+				Grid.Row="1"
+				BackgroundColor="#3498DB"
+				BorderRadius="0"
+				TextColor="White" 
+                Clicked="SelectNewPatientClick"
+				Text="{Binding SelectPatientText}" />
+            <Button 
+				x:Name="NewPatientButton"
+				Grid.Row="1"
+				Grid.Column="1"
+				BackgroundColor="#447b9b" 
+				BorderRadius="0"
+				TextColor="White"
+				Text="{Binding NewPatientText}"/>
+        </Grid>
+
+    </ContentPage.Content>
+
+</ContentPage>
