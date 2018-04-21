@@ -24,7 +24,7 @@ namespace NSService
     public class Startup
     {
         public static IConfigurationRoot Configuration;
-
+        private NLog.Logger _logger;
         HL7CommunicationService HL7CommunicationService;
 
         public Startup(IHostingEnvironment env)
@@ -51,7 +51,12 @@ namespace NSService
             var connectionString = Startup.Configuration["connectionString:NsToolConnectionString"];
             services.AddDbContext<PatientInfoContext>(o => o.UseSqlServer(connectionString));
             services.AddScoped<IPatientInfoRepository, PatientInfoRepository>();
-           // services.AddScoped<HL7CommunicationService, HL7CommunicationService>();
+
+            // services.AddScoped<HL7CommunicationService, HL7CommunicationService>();
+            services.Configure<IISOptions>(options =>
+            {
+                options.ForwardClientCertificate = false;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -66,8 +71,8 @@ namespace NSService
             var logfile = new NLog.Targets.FileTarget() { FileName = "log.txt", Name = "logfile" };
             config.LoggingRules.Add(new NLog.Config.LoggingRule("*", NLog.LogLevel.Info, logfile));
             NLog.LogManager.Configuration = config;
-
-
+            _logger = NLog.LogManager.GetCurrentClassLogger();
+            _logger.Log(NLog.LogLevel.Info, "Nlog Logger created.");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -86,6 +91,7 @@ namespace NSService
 
             });
 
+            _logger.Log(NLog.LogLevel.Info, "Mappers created.");
             app.UseMvc();
             app.UseStatusCodePages();
 

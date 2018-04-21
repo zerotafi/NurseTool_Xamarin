@@ -18,17 +18,36 @@ namespace NSService.Controllers
 
         public PatientController(ILogger<ExaminationController> logger, IPatientInfoRepository patientInfoRepository)
         {
-            _patientInfoRepository = patientInfoRepository;
             _logger = logger;
+            try
+            {
+                _logger.LogInformation("Create patient controller.");
+                  _patientInfoRepository = patientInfoRepository;
+                _logger.LogInformation("Patient controller created."+ patientInfoRepository.GetPatient(1));
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("PatientController init error: " + ex.Message.ToString());
+            }
+           
         }
 
         [HttpGet()]
         public IActionResult GetAllPatient()
         {
-            var patients = _patientInfoRepository.GetPatients();
-            var result = Mapper.Map<IEnumerable<PatientWithoutExaminationDTO>>(patients);
-
-            return Ok(result);
+            try
+            {
+                _logger.LogInformation("GetAllPatient Called");
+                var patients = _patientInfoRepository.GetPatients();
+                var result = Mapper.Map<IEnumerable<PatientWithoutExaminationDTO>>(patients);
+                if (result == null) { return StatusCode(500, "no result"); }
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message.ToString());
+            }
+            
         }
 
         [HttpGet("{id}")]

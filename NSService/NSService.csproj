@@ -17,9 +17,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.2" />
     <PackageReference Include="nHapi" Version="2.4.0.10" />
     <PackageReference Include="NHapiTools" Version="1.6.0.1" />
-    <PackageReference Include="NLog" Version="4.5.0" />
-    <PackageReference Include="NLog.Config" Version="4.5.0" />
-    <PackageReference Include="NLog.Extensions.Logging" Version="1.0.0" />
+    <PackageReference Include="NLog" Version="4.5.2" />
+    <PackageReference Include="NLog.Config" Version="4.5.2" />
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.0.1" />
     <PackageReference Include="runtime.any.System.Diagnostics.Tools" Version="4.0.1" />
     <PackageReference Include="SuperSocket" Version="1.6.6.1" />
     <PackageReference Include="SuperSocket.Engine" Version="1.6.6.1" />

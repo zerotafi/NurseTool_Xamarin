@@ -9,12 +9,14 @@ namespace NSService.Services
 {
     public class PatientInfoRepository : IPatientInfoRepository
     {
-
+        NLog.Logger _logger;
         public PatientInfoContext _context;
 
         public PatientInfoRepository(PatientInfoContext context)
         {
             _context = context;
+            _logger = NLog.LogManager.GetCurrentClassLogger();
+            _logger.Log(NLog.LogLevel.Info, "PatientInfoRepository  created.");
         }
 
         public bool PatientExists(int patientId)

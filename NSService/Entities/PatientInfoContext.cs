@@ -8,12 +8,15 @@ namespace NSService.Entities
 {
     public class PatientInfoContext : DbContext
     {
+        private NLog.Logger _logger;
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Examination> Examinations { get; set; }
 
         public PatientInfoContext(DbContextOptions<PatientInfoContext> options) : base(options)
         {
-            Database.Migrate();
+            _logger = NLog.LogManager.GetCurrentClassLogger();
+            _logger.Log(NLog.LogLevel.Info, "PatientInfoContext  created.");
+            Database.EnsureCreated();
         }
 
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
