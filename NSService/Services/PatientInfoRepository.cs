@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using NSService.Common;
 using NSService.Entities;
 
 namespace NSService.Services
@@ -31,12 +32,31 @@ namespace NSService.Services
 
         public Examination GetExamination(int patientId, int examinationId)
         {
-            return _context.Patients.FirstOrDefault(x => x.Id == patientId).Examinations.FirstOrDefault(x => x.Id == examinationId);
+            return _context.Patients.Include(x => x.Examinations).FirstOrDefault(x => x.Id == patientId).Examinations.FirstOrDefault(x => x.Id == examinationId);
+        }
+
+        public IExaminationType GetExaminationDetail(int patientId, int examinationId)
+        {
+            var exam = _context.Patients.Include(x => x.Examinations).FirstOrDefault(x => x.Id == patientId).Examinations.FirstOrDefault(x => x.Id == examinationId);
+            if (exam.ExaminationType == "SpO2")
+            {
+               return _context.SpOData.FirstOrDefault(x => x.ExaminationId == exam.Id);
+            }
+            if (exam.ExaminationType == "BloodPressure")
+            {
+                return _context.BloodPressureData.FirstOrDefault(x => x.ExaminationId == exam.Id);
+            }
+            else
+            {
+                return _context.BodyTemperatureData.FirstOrDefault(x => x.ExaminationId == exam.Id);
+            }
+
         }
 
         public IEnumerable<Examination> GetExaminations(int patientId)
         {
-            return _context.Patients.FirstOrDefault(x => x.Id == patientId).Examinations.ToList();
+            IEnumerable<Examination> result = _context.Patients.Include(x => x.Examinations).FirstOrDefault(x => x.Id == patientId).Examinations.ToList();
+            return result;
         }
 
         public Patient GetPatient(int patientId, bool includeExaminations)
@@ -56,11 +76,42 @@ namespace NSService.Services
             return _context.Patients.OrderBy(x => x.Name).ToList();
         }
 
+        public Patient GetPatientByExtID(int extId)
+        {
+            return _context.Patients.FirstOrDefault(x => x.ExternalId == extId);
+        }
 
-        public void AddExaminationToPatient(int patientId, Examination exam)
+        public bool PatientExistsByExtId(int extId)
+        {
+            return _context.Patients.Any(x => x.ExternalId == extId);
+        }
+
+        public void AddExaminationToPatient(int patientId, Examination exam, ExaminationType examType, IExaminationType examData)
         {
             var patient = GetPatient(patientId, true);
             patient.Examinations.Add(exam);
+            _context.SaveChanges();
+            if (examType == ExaminationType.BloodPressure)
+            {
+                BloodPressureData ExanData = examData as BloodPressureData;
+                ExanData.ExaminationId = exam.Id;
+                _context.BloodPressureData.Add(examData as BloodPressureData);
+                _context.SaveChanges();
+            }
+            if (examType == ExaminationType.BloodSpO2)
+            {
+                SpOData ExanData = examData as SpOData;
+                ExanData.ExaminationId = exam.Id;
+                _context.SpOData.Add(examData as SpOData);
+                _context.SaveChanges();
+            }
+            if (examType == ExaminationType.BodyTemperature)
+            {
+                BodyTemperatureData ExanData = examData as BodyTemperatureData;
+                ExanData.ExaminationId = exam.Id;
+                _context.BodyTemperatureData.Add(examData as BodyTemperatureData);
+                _context.SaveChanges();
+            }
         }
 
         public void DeleteExam(Examination exam)

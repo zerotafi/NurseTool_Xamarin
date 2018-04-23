@@ -1,4 +1,5 @@
-﻿using NSService.Entities;
+﻿using NSService.Common;
+using NSService.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,20 @@ namespace NSService.Services
 
         Examination GetExamination(int patientId, int examinationId);
 
-        void AddExaminationToPatient(int patientId, Examination exam);
+        void AddExaminationToPatient(int patientId, Examination exam, ExaminationType examType, IExaminationType examData);
 
         bool Save();
 
         void DeleteExam(Examination exam);
 
         void AddPatient(Patient patient);
+
+        bool PatientExistsByExtId(int extId);
+
+        Patient GetPatientByExtID(int extId);
+
+        IExaminationType GetExaminationDetail(int patientId, int examinationId);
+
+
     }
 }

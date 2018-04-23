@@ -11,8 +11,8 @@ using System;
 namespace NSService.Migrations
 {
     [DbContext(typeof(PatientInfoContext))]
-    [Migration("20180415125103_PatientExtraFileds2")]
-    partial class PatientExtraFileds2
+    [Migration("20180422104335_NewTables")]
+    partial class NewTables
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,6 +20,40 @@ namespace NSService.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.0.2-rtm-10011")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+            modelBuilder.Entity("NSService.Entities.BloodPressureData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("DiastolicValue");
+
+                    b.Property<DateTime>("ExaminationDate");
+
+                    b.Property<int>("MeanBloodPressure");
+
+                    b.Property<int>("PulseRate");
+
+                    b.Property<int>("SystolicValue");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BloodPressureData");
+                });
+
+            modelBuilder.Entity("NSService.Entities.BodyTemperatureData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("ExaminationDate");
+
+                    b.Property<int>("TemperatureVAlue");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BodyTemperatureData");
+                });
 
             modelBuilder.Entity("NSService.Entities.Examination", b =>
                 {
@@ -67,11 +101,47 @@ namespace NSService.Migrations
                     b.ToTable("Patients");
                 });
 
+            modelBuilder.Entity("NSService.Entities.SpOData", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("SPOValue");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("SpOData");
+                });
+
+            modelBuilder.Entity("NSService.Entities.BloodPressureData", b =>
+                {
+                    b.HasOne("NSService.Entities.Examination", "Examination")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("NSService.Entities.BodyTemperatureData", b =>
+                {
+                    b.HasOne("NSService.Entities.Examination", "Examination")
+                        .WithMany()
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("NSService.Entities.Examination", b =>
                 {
                     b.HasOne("NSService.Entities.Patient", "Patient")
                         .WithMany("Examinations")
                         .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("NSService.Entities.SpOData", b =>
+                {
+                    b.HasOne("NSService.Entities.Examination", "Examination")
+                        .WithMany()
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

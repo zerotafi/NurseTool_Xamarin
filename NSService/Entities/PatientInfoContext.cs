@@ -11,6 +11,11 @@ namespace NSService.Entities
         private NLog.Logger _logger;
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Examination> Examinations { get; set; }
+        public DbSet<BloodPressureData> BloodPressureData { get; set; }
+        public DbSet<BodyTemperatureData> BodyTemperatureData { get; set; }
+        public DbSet<SpOData> SpOData { get; set; }
+
+
 
         public PatientInfoContext(DbContextOptions<PatientInfoContext> options) : base(options)
         {

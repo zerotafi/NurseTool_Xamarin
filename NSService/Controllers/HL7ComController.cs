@@ -10,6 +10,8 @@ using Microsoft.Extensions.Logging;
 using NHapi.Base.Model;
 using NHapi.Base.Util;
 using NHapiTools.Base.Net;
+using NSService.Common;
+using NSService.Entities;
 using NSService.Protocol;
 using NSService.Services;
 
@@ -79,6 +81,99 @@ namespace NSService.Controllers
 
                     _patientInfoRepository.AddPatient(pateitnToAdd);
                     _patientInfoRepository.Save();
+                }
+                // Handle  ORU_R01 - incoming Examination data.
+                if (request.Message.ToString().Contains("ORU_R01"))
+                {
+                    int externalID = Convert.ToInt32(((NHapi.Model.V23.Message.ORU_R01)request.Message).GetRESPONSE().PATIENT.PID.PatientAccountNumber.ID.Value);
+                    Patient patient = new Patient();
+                    Examination examToAdd = new Examination();
+                    BloodPressureData newExamData = new BloodPressureData();
+                    SpOData newExaamSPo = new SpOData();
+                    BodyTemperatureData newExamBTD = new BodyTemperatureData();
+                    bool BloodPressureFalg = false;
+                    if (_patientInfoRepository.PatientExistsByExtId(externalID))
+                    {
+                        patient = _patientInfoRepository.GetPatientByExtID(externalID);
+                    }
+                    else
+                    {
+                        // Todo Save Patient.
+                    }
+
+                    int obsCount = ((NHapi.Model.V23.Message.ORU_R01)request.Message).GetRESPONSE().ORDER_OBSERVATIONRepetitionsUsed;
+                    for (int i = 0; i < obsCount; i++)
+                    {
+                        var orderObservation = ((NHapi.Model.V23.Message.ORU_R01)request.Message).GetRESPONSE().GetORDER_OBSERVATION(i);
+                        int obxCount = ((NHapi.Model.V23.Message.ORU_R01)request.Message).GetRESPONSE().GetORDER_OBSERVATION(i).OBSERVATIONRepetitionsUsed;
+                        for (int j = 0; j < obxCount; j++)
+                        {
+                            NHapi.Model.V23.Segment.OBX obx = orderObservation.GetOBSERVATION(j).OBX;
+                            var obxVaries = orderObservation.GetOBSERVATION(j).OBX.GetObservationValue();
+
+                            if (obx.ObservationIdentifier.Text.Value == "Body temperature")
+                            {
+                                Examination examToAddBDT= new Examination();
+                                examToAddBDT.Description = String.Empty;
+                                examToAddBDT.PatientId = patient.Id;
+                                examToAddBDT.Value = DateTime.Now.ToString();
+                                examToAddBDT.ExaminationType = "Body temperature";
+                                newExamBTD.TemperatureValue= Convert.ToInt32(((NHapi.Base.Model.AbstractPrimitive)obx.GetObservationValue(0).Data).Value);
+                                _patientInfoRepository.AddExaminationToPatient(patient.Id, examToAddBDT, ExaminationType.BodyTemperature, newExamBTD);
+                            }
+                            if (obx.ObservationIdentifier.Text.Value == "SpO2")
+                            {
+                                Examination examToAddSPO = new Examination();
+                                examToAddSPO.PatientId = patient.Id;
+                                examToAddSPO.Description = String.Empty;
+                                examToAddSPO.Value = DateTime.Now.ToString();
+                                examToAddSPO.ExaminationType = "SpO2";
+                                newExaamSPo.SPOValue = Convert.ToInt32(((NHapi.Base.Model.AbstractPrimitive)obx.GetObservationValue(0).Data).Value);
+                                _patientInfoRepository.AddExaminationToPatient(patient.Id, examToAddSPO, ExaminationType.BloodSpO2, newExaamSPo);
+                            }
+                            if (obx.ObservationIdentifier.Text.Value == "Mean blood pressure")
+                            {
+                                BloodPressureFalg = true;
+                                examToAdd.PatientId = patient.Id;
+                                examToAdd.Description = String.Empty;
+                                examToAdd.Value = DateTime.Now.ToString();
+                                examToAdd.ExaminationType = "BloodPressure";
+                                newExamData.MeanBloodPressure = Convert.ToInt32(((NHapi.Base.Model.AbstractPrimitive)obx.GetObservationValue(0).Data).Value);
+                            }
+                            if (obx.ObservationIdentifier.Text.Value == "Pulse rate")
+                            {
+                                BloodPressureFalg = true;
+                                examToAdd.PatientId = patient.Id;
+                                examToAdd.Description = String.Empty;
+                                examToAdd.Value = DateTime.Now.ToString();
+                                examToAdd.ExaminationType = "BloodPressure";
+                                newExamData.PulseRate = Convert.ToInt32(((NHapi.Base.Model.AbstractPrimitive)obx.GetObservationValue(0).Data).Value);
+                            }
+                            if (obx.ObservationIdentifier.Text.Value == "Diastolic blood pressure")
+                            {
+                                BloodPressureFalg = true;
+                                examToAdd.PatientId = patient.Id;
+                                examToAdd.Description = String.Empty;
+                                examToAdd.Value = DateTime.Now.ToString();
+                                examToAdd.ExaminationType = "BloodPressure";
+                                newExamData.DiastolicValue = Convert.ToInt32(((NHapi.Base.Model.AbstractPrimitive)obx.GetObservationValue(0).Data).Value);
+                            }
+                            if (obx.ObservationIdentifier.Text.Value == "Systolic blood pressure")
+                            {
+                                BloodPressureFalg = true;
+                                examToAdd.PatientId = patient.Id;
+                                examToAdd.Description = String.Empty;
+                                examToAdd.Value = DateTime.Now.ToString();
+                                examToAdd.ExaminationType = "BloodPressure";
+                                newExamData.SystolicValue = Convert.ToInt32(((NHapi.Base.Model.AbstractPrimitive)obx.GetObservationValue(0).Data).Value);
+                            }
+                        }
+                        if (BloodPressureFalg)
+                        {
+                            _patientInfoRepository.AddExaminationToPatient(patient.Id, examToAdd, ExaminationType.BloodPressure, newExamData);
+                        }
+
+                    }
                 }
             }
             catch (Exception ex)

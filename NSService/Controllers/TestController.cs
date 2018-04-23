@@ -12,6 +12,7 @@ namespace NSService.Controllers
         public PatientInfoContext _ctx;
 
         public TestController(PatientInfoContext ctx)
+
         {
             _ctx = ctx;
         }

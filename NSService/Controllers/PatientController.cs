@@ -51,7 +51,7 @@ namespace NSService.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetPatient(int id, bool includeExaminations = false)
+        public IActionResult GetPatient(int id, bool includeExaminations = true)
         {
             var patient = _patientInfoRepository.GetPatient(id, includeExaminations);
 

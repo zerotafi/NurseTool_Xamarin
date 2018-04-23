@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NSService.Entities;
 using NSService.Models;
 using NSService.Services;
 using System;
@@ -43,35 +44,61 @@ namespace NSService.Controllers
                     return NotFound();
                 }
 
-                var examsDTOList = Mapper.Map<ExaminationsDTO>(exams); 
+                var examsDTOList = Mapper.Map<List<ExaminationsDTO>>(exams); 
 
                 return Ok(examsDTOList);
             }
             catch(Exception ex)
+
             {
                 _logger.LogCritical("GetExaminations() Error: " + ex.Message.ToString());
                 return StatusCode(500, "Internal Server Error");
             }
         }
 
+        [HttpGet]
+
         [HttpGet("{patientId}/examination/{exmiantionId}", Name = "GetExamination")]
         public IActionResult GetExaminationsByID(int patientId, int exmiantionId)
         {
-            var patient = PatientDataStore.Current.Patients.FirstOrDefault(x => x.Id == patientId);
+            if(!_patientInfoRepository.PatientExists(patientId))
+                {
+                _logger.LogInformation("Patient not exist PatientID: " + patientId);
+                return NotFound();
+            }
 
-            if (patient == null)
+            var examination = _patientInfoRepository.GetExamination(patientId, exmiantionId);
+
+            var examinationDetail =_patientInfoRepository.GetExaminationDetail(patientId, exmiantionId);
+
+            ExaminationDetailDTO examinationResult = new ExaminationDetailDTO();
+            examinationResult.Description = examination.ExaminationType;
+
+            if (examination == null)
             {
                 return NotFound();
             }
 
-            var examination = patient.Examinations.FirstOrDefault(x => x.Id == exmiantionId);
+            if (examinationDetail is SpOData)
+            {
+                examinationResult.SPOValue = (examinationDetail as SpOData).SPOValue;
+            }
+            if (examinationDetail is BloodPressureData)
+            {
+                examinationResult.MeanBloodPressure = (examinationDetail as BloodPressureData).MeanBloodPressure;
+                examinationResult.PulseRate = (examinationDetail as BloodPressureData).PulseRate;
+                examinationResult.SystolicValue = (examinationDetail as BloodPressureData).SystolicValue;
+                examinationResult.DiastolicValue = (examinationDetail as BloodPressureData).DiastolicValue;
+            }
+            if (examinationDetail is BodyTemperatureData)
+            {
+                examinationResult.TemperatureValue = (examinationDetail as BodyTemperatureData).TemperatureValue;
 
-            if(examination == null)
+            }
+            else
             {
                 return NotFound();
             }
-
-            var examinationResult = Mapper.Map<ExaminationsDTO>(examination);
 
             return Ok(examinationResult);
 
@@ -97,7 +124,7 @@ namespace NSService.Controllers
 
             var ExaminationNew = Mapper.Map<Entities.Examination>(examinationDTO);
 
-            _patientInfoRepository.AddExaminationToPatient(patientId, ExaminationNew);
+            _patientInfoRepository.AddExaminationToPatient(patientId, ExaminationNew, Common.ExaminationType.BloodPressure, null);
 
             if (!_patientInfoRepository.Save())
             {

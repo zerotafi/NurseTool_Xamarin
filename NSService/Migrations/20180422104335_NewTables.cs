@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace NSService.Migrations
 {
-    public partial class PatientExtraFileds : Migration
+    public partial class NewTables : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
