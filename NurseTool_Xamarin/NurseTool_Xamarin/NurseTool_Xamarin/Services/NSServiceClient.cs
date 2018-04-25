@@ -15,7 +15,7 @@ namespace NurseTool_Xamarin.Services
 
         public NSServiceClient()
         {
-            client = new RestClient("http://94dd2db7.ngrok.io");
+            client = new RestClient("http://7372c90e.ngrok.io");
         }
 
         public async Task<List<Patient>> GetPatients()
@@ -27,6 +27,19 @@ namespace NurseTool_Xamarin.Services
             var content = response.Content;
             Items = JsonConvert.DeserializeObject<List<Patient>>(content);
        
+            return Items;
+        }
+
+        public async Task<List<Examination>> GetExamList(int patientId)
+        {
+            string requestString = string.Format("api/patients/{0}/examination/", patientId);
+            var request = new RestRequest(requestString, Method.GET);
+            List<Examination> Items = new List<Examination>();
+
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+            Items = JsonConvert.DeserializeObject<List<Examination>>(content);
+
             return Items;
         }
 

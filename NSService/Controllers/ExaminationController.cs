@@ -98,6 +98,8 @@ namespace NSService.Controllers
             else
             {
                 return NotFound();
+
+
             }
 
             return Ok(examinationResult);

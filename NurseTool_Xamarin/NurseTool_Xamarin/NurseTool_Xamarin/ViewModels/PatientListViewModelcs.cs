@@ -13,7 +13,7 @@ namespace NurseTool_Xamarin.ViewModels
 {
     class PatientListViewModelcs : BaseViewModel
     {
-        NSServiceClient nSServiceClient;
+       NSServiceClient nSServiceClient;
        public  ObservableCollection<Patient> patientList;
 
         public PatientListViewModelcs()

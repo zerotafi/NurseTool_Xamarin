@@ -22,6 +22,14 @@ namespace NurseTool_Xamarin.Views
             vm = new PatientDeatilViewModel(patient);
             BindingContext = vm;
         }
-       
+
+        private void ExaminationListviewItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem == null)
+            {
+                return;
+            }
+        }
+
     }
 }

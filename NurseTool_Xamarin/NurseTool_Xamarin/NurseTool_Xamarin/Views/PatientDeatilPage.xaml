@@ -20,6 +20,17 @@
                           TextColor="Black"/>
             </StackLayout>
             </StackLayout>
+            <ScrollView Orientation="Horizontal" BackgroundColor="#f9fffe">
+                <ListView Grid.Row ="0" ItemSelected="ExaminationListviewItemSelected"
+                    ItemsSource="{Binding ExaminationList}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Text ="{Binding examinationType}" Detail="{Binding value}"
+                          TextColor="Black"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </ScrollView>
         </Grid>
     </ContentPage.Content>
 </ContentPage>
