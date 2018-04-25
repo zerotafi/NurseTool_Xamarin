@@ -44,6 +44,19 @@ namespace NurseTool_Xamarin.Services
         }
 
 
+        public async Task<ExaminationDetail> GetExamDetail(int patientId, int examinationId)
+        {
+            string requestString = string.Format("api/patients/{0}/examination/{1}", patientId, examinationId);
+            var request = new RestRequest(requestString, Method.GET);
+            ExaminationDetail Item = new ExaminationDetail();
+
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+            Item = JsonConvert.DeserializeObject<ExaminationDetail>(content);
+
+            return Item;
+        }
+
 
     }
 }

@@ -14,13 +14,17 @@ namespace NurseTool_Xamarin.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class PatientDeatilPage : ContentPage
 	{
-         PatientDeatilViewModel vm;
+        Patient _patient;
+        Examination selectedExamination;
+        PatientDeatilViewModel vm;
 
         public  PatientDeatilPage (Patient patient)
 		{
 			InitializeComponent ();
             vm = new PatientDeatilViewModel(patient);
             BindingContext = vm;
+            selectedExamination = new Examination();
+            _patient = patient;
         }
 
         private void ExaminationListviewItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -29,6 +33,8 @@ namespace NurseTool_Xamarin.Views
             {
                 return;
             }
+            selectedExamination = e.SelectedItem as Examination;
+            Navigation.PushAsync(new Views.ExaminationDetail(_patient,selectedExamination));
         }
 
     }

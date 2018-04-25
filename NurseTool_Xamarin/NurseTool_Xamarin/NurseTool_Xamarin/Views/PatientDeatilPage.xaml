@@ -12,9 +12,9 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <StackLayout Orientation="Vertical">
+            <StackLayout Orientation="Vertical" Padding="15">
                 <Label Text="Patietn Details" />
-            <StackLayout Orientation="Horizontal">
+            <StackLayout Orientation="Horizontal" Padding="15">
                 <Label Text="Name:"/>
                     <Label Text ="{Binding Name}"
                           TextColor="Black"/>
