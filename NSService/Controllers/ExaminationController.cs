@@ -56,7 +56,6 @@ namespace NSService.Controllers
             }
         }
 
-        [HttpGet]
 
         [HttpGet("{patientId}/examination/{exmiantionId}", Name = "GetExamination")]
         public IActionResult GetExaminationsByID(int patientId, int exmiantionId)
@@ -82,6 +81,7 @@ namespace NSService.Controllers
             if (examinationDetail is SpOData)
             {
                 examinationResult.SPOValue = (examinationDetail as SpOData).SPOValue;
+                return Ok(examinationResult);
             }
             if (examinationDetail is BloodPressureData)
             {
@@ -89,20 +89,15 @@ namespace NSService.Controllers
                 examinationResult.PulseRate = (examinationDetail as BloodPressureData).PulseRate;
                 examinationResult.SystolicValue = (examinationDetail as BloodPressureData).SystolicValue;
                 examinationResult.DiastolicValue = (examinationDetail as BloodPressureData).DiastolicValue;
+                return Ok(examinationResult);
             }
             if (examinationDetail is BodyTemperatureData)
             {
                 examinationResult.TemperatureValue = (examinationDetail as BodyTemperatureData).TemperatureValue;
-
-            }
-            else
-            {
-                return NotFound();
-
-
+                return Ok(examinationResult);
             }
 
-            return Ok(examinationResult);
+            return NotFound();
 
         }
 

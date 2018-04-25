@@ -21,9 +21,39 @@
                         <Label Text ="{Binding Description}"
                           TextColor="Black"/>
                     </StackLayout>
-                    <StackLayout Orientation="Horizontal"  Padding="15">
-                        <Label Text="Temperature :"/>
-                        <Label Text ="{Binding Temperature}"
+                    <StackLayout Orientation="Horizontal"  Padding="15" IsVisible="{Binding TemperatureVisible}">
+                        <Label Text="Temperature :" IsVisible="{Binding TemperatureVisible}" />
+                        <Label Text ="{Binding Temperature}" IsVisible="{Binding TemperatureVisible}"
+                          TextColor="Black"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal"  Padding="15" IsVisible="{Binding SpoValueVisible }">
+                        <Label Text="SpO :" IsVisible="{Binding SpoValueVisible }" />
+                        <Label Text ="{Binding SpoValue}"  IsVisible="{Binding SpoValueVisible }"
+                          TextColor="Black"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal"  Padding="15" IsVisible="{Binding SystolicVisible}">
+                        <Label Text="Systolic Value :" IsVisible="{Binding SystolicVisible}" />
+                        <Label Text ="{Binding SystolicValue}" IsVisible="{Binding SystolicVisible}"
+                          TextColor="Black"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal"  Padding="15" IsVisible="{Binding DiastolicVisible}">
+                        <Label Text="Diastolic Value :" IsVisible="{Binding DiastolicVisible}" />
+                        <Label Text ="{Binding DiastolicValue}" IsVisible="{Binding DiastolicVisible}"
+                          TextColor="Black"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal"  Padding="15" IsVisible="{Binding MeanBloodPressureVisible}">
+                        <Label Text="Diastolic Value :" IsVisible="{Binding MeanBloodPressureVisible}" />
+                        <Label Text ="{Binding MeanBloodPressure}" IsVisible="{Binding MeanBloodPressureVisible}"
+                          TextColor="Black"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal"  Padding="15" IsVisible="{Binding PulseRateVisible}">
+                        <Label Text="Pulse Rate :" IsVisible="{Binding PulseRateVisible}" />
+                        <Label Text ="{Binding PulseRate}" IsVisible="{Binding PulseRateVisible}"
+                          TextColor="Black"/>
+                    </StackLayout>
+                    <StackLayout Orientation="Horizontal"  Padding="15" IsVisible="{Binding ExaminationDateisible}">
+                        <Label Text="ExaminationDate :"  IsVisible="{Binding ExaminationDateisible}" />
+                        <Label Text ="{Binding ExaminationDate}"  IsVisible="{Binding ExaminationDateisible}"
                           TextColor="Black"/>
                     </StackLayout>
                 </StackLayout>

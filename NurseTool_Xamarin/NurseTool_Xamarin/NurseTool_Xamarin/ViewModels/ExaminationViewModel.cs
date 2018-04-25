@@ -22,10 +22,82 @@ namespace NurseTool_Xamarin.ViewModels
             set { examinationDetail.description = value; }
         }
 
+        public bool TemperatureVisible
+        {
+            get { return examinationDetail.temperatureValue != null; }
+        }
+
         public int? Temperature
         {
             get { return examinationDetail.temperatureValue; }
             set { examinationDetail.temperatureValue = value; }
+        }
+
+        public bool SpoValueVisible
+        {
+            get { return examinationDetail.spoValue != null; }
+        }
+
+        public int? SpoValue
+        {
+            get { return examinationDetail.spoValue; }
+            set { examinationDetail.spoValue = value; }
+        }
+
+        public bool SystolicVisible
+        {
+            get { return examinationDetail.systolicValue != null; }
+        }
+
+        public int? SystolicValue
+        {
+            get { return examinationDetail.systolicValue; }
+            set { examinationDetail.systolicValue = value; }
+        }
+
+        public bool DiastolicVisible
+        {
+            get { return examinationDetail.diastolicValue != null; }
+        }
+
+        public int? DiastolicValue
+        {
+            get { return examinationDetail.diastolicValue; }
+            set { examinationDetail.diastolicValue = value; }
+        }
+
+        public bool MeanBloodPressureVisible
+        {
+            get { return examinationDetail.meanBloodPressure != null; }
+        }
+
+
+        public int? MeanBloodPressure
+        {
+            get { return examinationDetail.meanBloodPressure; }
+            set { examinationDetail.meanBloodPressure = value; }
+        }
+
+        public bool PulseRateVisible
+        {
+            get { return examinationDetail.pulseRate != null; }
+        }
+
+        public int? PulseRate
+        {
+            get { return examinationDetail.pulseRate; }
+            set { examinationDetail.pulseRate = value; }
+        }
+
+        public bool ExaminationDateisible
+        {
+            get { return examinationDetail.examinationDate != null; }
+        }
+
+        public DateTime? ExaminationDate
+        {
+            get { return examinationDetail.examinationDate; }
+            set { examinationDetail.examinationDate = value; }
         }
 
         public Examination examination { get ; set; }
