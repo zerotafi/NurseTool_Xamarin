@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NurseTool_Xamarin.Views.ExaminationDetail">
     <ContentPage.Content>
-        <Grid  BackgroundColor="#6dafad">
+        <Grid  BackgroundColor="#def4f7">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="AUTO" />

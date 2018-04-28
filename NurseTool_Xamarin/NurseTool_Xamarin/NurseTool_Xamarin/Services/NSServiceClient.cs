@@ -15,7 +15,7 @@ namespace NurseTool_Xamarin.Services
 
         public NSServiceClient()
         {
-            client = new RestClient("http://7372c90e.ngrok.io");
+            client = new RestClient("http://7e04e596.ngrok.io");
         }
 
         public async Task<List<Patient>> GetPatients()

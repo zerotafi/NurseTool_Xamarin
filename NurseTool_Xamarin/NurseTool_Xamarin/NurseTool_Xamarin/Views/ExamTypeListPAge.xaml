@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NurseTool_Xamarin.Views.ExamTypeListPAge">
+    <ContentPage.Content>
+        <Grid  BackgroundColor="#def4f7">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="AUTO" />
+                    <RowDefinition Height="AUTO" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackLayout Orientation="Vertical" Padding="15">
+                    <Label Text="Select Examination Type" />
+                    <StackLayout Orientation="Horizontal" Padding="15">
+                        <Label Text="Name:"/>
+                        <Label Text ="{Binding Name}"
+                          TextColor="Black"/>
+                    </StackLayout>
+                </StackLayout>
+                <ScrollView Orientation="Horizontal" BackgroundColor="#f9fffe">
+                    <ListView Grid.Row ="0" ItemSelected="ExaminationTypeListviewItemSelected"
+                    ItemsSource="{Binding ExaminationTypeList}" >
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                            <TextCell Text ="{Binding typeName}"
+                          TextColor="Black"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollView>
+                <Button 
+				x:Name="ExamTypeNextButton"
+				Grid.Row="1"
+				BackgroundColor="#3498DB"
+				BorderRadius="0"
+				TextColor="White" 
+                Clicked="ExamTypeNextClick"
+				Text="Next" />
+            </Grid>
+    </ContentPage.Content>
+</ContentPage>

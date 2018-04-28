@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NurseTool_Xamarin.Views.PatientDeatilPage">
     <ContentPage.Content>
-        <Grid  BackgroundColor="#6dafad">
+        <Grid  BackgroundColor="#def4f7">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="AUTO" />
@@ -31,6 +31,14 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </ScrollView>
+            <Button 
+				x:Name="AddNewExamButton"
+				Grid.Row="1"
+				BackgroundColor="#3498DB"
+				BorderRadius="0"
+				TextColor="White" 
+                Clicked="SelectNewExaminationClick"
+				Text="New Examination" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

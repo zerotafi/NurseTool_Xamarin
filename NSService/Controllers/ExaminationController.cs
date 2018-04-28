@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using NSService.Common;
 using NSService.Entities;
 using NSService.Models;
 using NSService.Services;

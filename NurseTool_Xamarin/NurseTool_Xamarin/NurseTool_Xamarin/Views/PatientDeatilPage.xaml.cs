@@ -37,5 +37,10 @@ namespace NurseTool_Xamarin.Views
             Navigation.PushAsync(new Views.ExaminationDetail(_patient,selectedExamination));
         }
 
+        private void SelectNewExaminationClick(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new Views.ExamTypeListPAge(_patient));
+        }
+
     }
 }
