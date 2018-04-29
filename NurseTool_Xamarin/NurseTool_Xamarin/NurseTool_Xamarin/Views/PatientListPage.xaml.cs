@@ -32,9 +32,12 @@ namespace NurseTool_Xamarin.Views
                 return;
             }
             selectedPatient = e.SelectedItem as Patient;
-         
-            Navigation.PushAsync(new Views.PatientDeatilPage(selectedPatient));
+        }
 
+        private void PatientSelectClick(object sender, EventArgs e)
+        {
+            if(selectedPatient != null)
+            Navigation.PushAsync(new Views.PatientDeatilPage(selectedPatient));
         }
 
     }

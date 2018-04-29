@@ -12,12 +12,13 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="60"/>
+                <RowDefinition Height="60"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-
+            <Label Grid.ColumnSpan="2" HorizontalOptions="Center" TextColor="#00134d" FontAttributes="Bold" FontSize="Medium" Text="NurseCube"/>
             <Image
                 x:Name="MedicalImage"
                 Grid.Row="0"
@@ -26,22 +27,45 @@
                 Aspect="AspectFit"
 				HorizontalOptions="FillAndExpand" 
 				VerticalOptions ="FillAndExpand"/>
+            
             <Button 
 				x:Name="SelectPatientButton"
 				Grid.Row="1"
 				BackgroundColor="#3498DB"
 				BorderRadius="0"
+                FontSize="Small"
 				TextColor="White" 
                 Clicked="SelectNewPatientClick"
 				Text="{Binding SelectPatientText}" />
-            <Button 
+                    <Button 
 				x:Name="NewPatientButton"
 				Grid.Row="1"
 				Grid.Column="1"
 				BackgroundColor="#447b9b" 
 				BorderRadius="0"
+                FontSize="Small"
 				TextColor="White"
 				Text="{Binding NewPatientText}"/>
+            
+            <Button 
+				x:Name="temp"
+				Grid.Row="2"
+				BackgroundColor="#3498DB"
+				BorderRadius="0"
+                FontSize="Small"
+				TextColor="White" 
+                Clicked="SelectNewPatientClick"
+				Text="Data management" />
+                <Button 
+				x:Name="temp2"
+				Grid.Row="2"
+				Grid.Column="1"
+                FontSize="Small"
+				BackgroundColor="#447b9b" 
+				BorderRadius="0"
+				TextColor="White"
+				Text="Configure"/>
+
         </Grid>
 
     </ContentPage.Content>

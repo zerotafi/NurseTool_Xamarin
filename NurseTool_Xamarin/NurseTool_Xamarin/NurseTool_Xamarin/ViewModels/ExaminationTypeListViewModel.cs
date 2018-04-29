@@ -8,7 +8,6 @@ using System.Text;
 
 namespace NurseTool_Xamarin.ViewModels
 {
-     
 
     class ExaminationTypeListViewModel : BaseViewModel
     {

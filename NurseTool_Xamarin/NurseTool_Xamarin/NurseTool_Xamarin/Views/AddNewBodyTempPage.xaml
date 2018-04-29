@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NurseTool_Xamarin.Views.AddNewBodyTempPage">
+    <ContentPage.Content>
+        <Grid  BackgroundColor="#def4f7">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="AUTO" />
+                <RowDefinition Height="AUTO" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ScrollView Orientation="Horizontal" Grid.Row="0" BackgroundColor="#f9fffe">
+                <StackLayout Orientation="Vertical">
+                    <Label Text="New Body Temperature" />
+                    <StackLayout Orientation="Vertical" Padding="15">
+                        <Label Text="Temperature Value:"/>
+                        <Entry Text ="{Binding TemperatureValue}" MinimumWidthRequest="30" Keyboard="Numeric" WidthRequest="30" PlaceholderColor="#3498DB"
+                          TextColor="Black"/>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+            <Button Grid.Row ="2" Text ="Save" Clicked="ExamSavetClick" BackgroundColor="#447b9b"/>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

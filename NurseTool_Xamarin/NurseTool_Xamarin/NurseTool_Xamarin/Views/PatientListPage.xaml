@@ -15,7 +15,7 @@
             </Grid.ColumnDefinitions>
 
             <ScrollView Orientation="Horizontal" BackgroundColor="#f9fffe">
-                <ListView Grid.Row ="0" ItemSelected="PatientLsitviewItemSelected"
+                <ListView Grid.Row ="0" ItemSelected="PatientLsitviewItemSelected" 
                     ItemsSource="{Binding PatietnList}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -25,9 +25,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </ScrollView>
-
-            <Entry Grid.Row ="1" Placeholder ="Input a new name" Text ="{Binding Name}"/>
-            <Button Grid.Row ="2" Text ="Send" Command="{Binding ButtonClick}" BackgroundColor="#447b9b"/>
+            <Button Grid.Row ="2" Text ="Select" Clicked="PatientSelectClick" BackgroundColor="#447b9b"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

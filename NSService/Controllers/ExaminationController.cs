@@ -62,7 +62,7 @@ namespace NSService.Controllers
         public IActionResult GetExaminationsByID(int patientId, int exmiantionId)
         {
             if(!_patientInfoRepository.PatientExists(patientId))
-                {
+            {
                 _logger.LogInformation("Patient not exist PatientID: " + patientId);
                 return NotFound();
             }
@@ -107,12 +107,12 @@ namespace NSService.Controllers
         {
             if (examinationDTO == null)
             {
-                BadRequest();
+                return BadRequest();
             }
 
             if(!ModelState.IsValid)
-            { 
-                BadRequest();
+            {
+                return BadRequest();
             }
 
             if (!_patientInfoRepository.PatientExists(patientId))
@@ -120,18 +120,83 @@ namespace NSService.Controllers
                 return NotFound();
             }
 
-            var ExaminationNew = Mapper.Map<Entities.Examination>(examinationDTO);
-
-            _patientInfoRepository.AddExaminationToPatient(patientId, ExaminationNew, Common.ExaminationType.BloodPressure, null);
-
-            if (!_patientInfoRepository.Save())
+            if (examinationDTO.Description == "Body temperature")
             {
-                return StatusCode(500, "Internal Server Error");
+                try
+                {
+                    Examination examToAddBDT = new Examination();
+                    examToAddBDT.Description = String.Empty;
+                    examToAddBDT.PatientId = patientId;
+                    examToAddBDT.Value = DateTime.Now.ToString();
+                    examToAddBDT.ExaminationType = "Body temperature";
+                    BodyTemperatureData newExamBTD = new BodyTemperatureData()
+                    { TemperatureValue = examinationDTO.TemperatureValue.Value };
+
+                    _patientInfoRepository.AddExaminationToPatient(patientId, examToAddBDT, ExaminationType.BodyTemperature, newExamBTD);
+                    return Ok();
+                }
+                catch(Exception ex)
+                {
+                    _logger.LogCritical("CreateExamination() Error: " + ex.Message.ToString());
+                    return StatusCode(500, "Internal Server Error");
+                }
+
             }
 
-            var ExaminationResult = Mapper.Map<ExaminationCreationDTO>(ExaminationNew);
+            if (examinationDTO.Description == "Blood Pressure")
+            {
+                try
+                {
+                    Examination examToAddBDT = new Examination();
+                    examToAddBDT.Description = String.Empty;
+                    examToAddBDT.PatientId = patientId;
+                    examToAddBDT.Value = DateTime.Now.ToString();
+                    examToAddBDT.ExaminationType = "Blood Pressure";
+                    BloodPressureData newExamBTD = new BloodPressureData()
+                    {
+                        SystolicValue = examinationDTO.SystolicValue.Value,
+                        DiastolicValue = examinationDTO.DiastolicValue.Value,
+                        PulseRate = examinationDTO.PulseRate.Value,
+                        MeanBloodPressure = examinationDTO.MeanBloodPressure.Value
+                    };
 
-            return CreatedAtRoute("GetExamination", new { patientID = patientId , ExaminationResult });
+                    _patientInfoRepository.AddExaminationToPatient(patientId, examToAddBDT, ExaminationType.BloodPressure, newExamBTD);
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogCritical("CreateExamination() Error: " + ex.Message.ToString());
+                    return StatusCode(500, "Internal Server Error");
+                }
+
+            }
+
+            if (examinationDTO.Description == "SpO2")
+            {
+                try
+                {
+                    Examination examToAddBDT = new Examination();
+                    examToAddBDT.Description = String.Empty;
+                    examToAddBDT.PatientId = patientId;
+                    examToAddBDT.Value = DateTime.Now.ToString();
+                    examToAddBDT.ExaminationType = "SpO2";
+                    SpOData newExamBTD = new SpOData()
+                    {  SPOValue = examinationDTO.SPOValue.Value};
+
+                    _patientInfoRepository.AddExaminationToPatient(patientId, examToAddBDT, ExaminationType.BloodSpO2, newExamBTD);
+                    return Ok();
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogCritical("CreateExamination() Error: " + ex.Message.ToString());
+                    return StatusCode(500, "Internal Server Error");
+                }
+
+            }
+
+
+            return NotFound();
+
         }
 
         [HttpPut("{patientId}/examination/{exmiantionId}")]

@@ -15,7 +15,7 @@ namespace NurseTool_Xamarin.Services
 
         public NSServiceClient()
         {
-            client = new RestClient("http://7e04e596.ngrok.io");
+            client = new RestClient("http://7064e4e3.ngrok.io");
         }
 
         public async Task<List<Patient>> GetPatients()
@@ -57,6 +57,87 @@ namespace NurseTool_Xamarin.Services
             return Item;
         }
 
+        public async Task<bool> PostExamBodyTemp(int patientId, int temperatureValue)
+        {
+            string requestString = string.Format("api/patients/{0}/examination/", patientId);
+            var request = new RestRequest(requestString, Method.POST);
+
+            BodyTemperatureCreate dto = new BodyTemperatureCreate()
+            {
+              PatientId = patientId,
+              TemperatureValue = temperatureValue,
+              ExaminationType = "Body temperature",
+              Description = "Body temperature",
+              Value = DateTime.Now.ToString()
+            };
+            var body = JsonConvert.SerializeObject(dto);
+
+            request.AddHeader("Accept", "application/json");
+            request.Parameters.Clear();
+            request.AddParameter("application/json", body, ParameterType.RequestBody); 
+
+
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+
+            return response.StatusCode == System.Net.HttpStatusCode.OK;
+        }
+
+        public async Task<bool> PostExamBodySPO(int patientId, int spoValue)
+        {
+            string requestString = string.Format("api/patients/{0}/examination/", patientId);
+            var request = new RestRequest(requestString, Method.POST);
+
+            BodyTemperatureCreate dto = new BodyTemperatureCreate()
+            {
+                PatientId = patientId,
+                SPOValue = spoValue,
+                ExaminationType = "SpO2",
+                Description = "SpO2",
+                Value = DateTime.Now.ToString()
+            };
+            var body = JsonConvert.SerializeObject(dto);
+
+            request.AddHeader("Accept", "application/json");
+            request.Parameters.Clear();
+            request.AddParameter("application/json", body, ParameterType.RequestBody);
+
+
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+
+            return response.StatusCode == System.Net.HttpStatusCode.OK;
+        }
+
+        public async Task<bool> PostExamBodyBloodPressure(int patientId, int diastolicValue, int systolicValue,
+            int meanBloodPressure, int pulseRate)
+        {
+            string requestString = string.Format("api/patients/{0}/examination/", patientId);
+            var request = new RestRequest(requestString, Method.POST);
+
+            BodyTemperatureCreate dto = new BodyTemperatureCreate()
+            {
+                PatientId = patientId,
+                SystolicValue = systolicValue,
+                DiastolicValue = diastolicValue,
+                MeanBloodPressure = meanBloodPressure,
+                PulseRate = pulseRate,
+                ExaminationType = "Blood Pressure",
+                Description = "Blood Pressure",
+                Value = DateTime.Now.ToString()
+            };
+            var body = JsonConvert.SerializeObject(dto);
+
+            request.AddHeader("Accept", "application/json");
+            request.Parameters.Clear();
+            request.AddParameter("application/json", body, ParameterType.RequestBody);
+
+
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+
+            return response.StatusCode == System.Net.HttpStatusCode.OK;
+        }
 
     }
 }
