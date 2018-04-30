@@ -5,37 +5,38 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Linq;
 
 namespace NurseTool_Xamarin.ViewModels
 {
-    public class PatientDeatilViewModel : BaseViewModel
+    class DataManagementViewModel : BaseViewModel
     {
         NSServiceClient nSServiceClient;
         public ObservableCollection<Examination> examinationList;
-
-        public string Name
-        {
-            get {  return deatilPatient.name; }
-            set { deatilPatient.name = value; }
-        }
-
+        List<Patient> Patients;
         public ObservableCollection<Examination> ExaminationList
         {
             get { GetExaminations(); return examinationList; }
             set { examinationList = value; }
         }
 
-        public Patient deatilPatient { get; set; }
-        public PatientDeatilViewModel(Patient patient_incoming = null)
+        public DataManagementViewModel()
         {
-            deatilPatient = patient_incoming;
             examinationList = new ObservableCollection<Examination>();
             nSServiceClient = new NSServiceClient();
+            Patients = nSServiceClient.GetPatients().Result;
+
         }
         public void GetExaminations()
         {
-            var examinationListToAdd = nSServiceClient.GetExamList(deatilPatient.id).Result;
-            examinationListToAdd.ForEach(x => examinationList.Add(x));
+            List<Examination> allExam = new List<Examination>();
+            foreach (var item in Patients)
+            {
+                List<Examination> examinationListToAdd = nSServiceClient.GetExamList(item.id).Result;
+                var unArchiveexaminationListToAdd = examinationListToAdd.Where(x => x.archived == false).ToList();
+                unArchiveexaminationListToAdd.ForEach(x => allExam.Add(x));
+            }
+            allExam.ForEach(x => examinationList.Add(x));
         }
     }
 }

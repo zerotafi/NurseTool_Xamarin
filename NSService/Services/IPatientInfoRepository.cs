@@ -18,6 +18,7 @@ namespace NSService.Services
         IEnumerable<Examination> GetExaminations(int patientId);
 
         Examination GetExamination(int patientId, int examinationId);
+        Examination GetExamination(int examinationId);
 
         void AddExaminationToPatient(int patientId, Examination exam, ExaminationType examType, IExaminationType examData);
 

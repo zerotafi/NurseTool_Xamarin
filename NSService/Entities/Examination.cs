@@ -25,5 +25,7 @@ namespace NSService.Entities
         public string ExaminationType { get; set; }
 
         public string Value { get; set; }
+
+        public bool Archived { get; set; }
     }
 }

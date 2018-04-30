@@ -19,6 +19,11 @@ namespace NurseTool_Xamarin
             BindingContext = vm;
         
 		}
+        
+        private void DataManagementClick(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new Views.DataManagementPage());
+        }
 
         private void SelectNewPatientClick(object sender, EventArgs e)
         {

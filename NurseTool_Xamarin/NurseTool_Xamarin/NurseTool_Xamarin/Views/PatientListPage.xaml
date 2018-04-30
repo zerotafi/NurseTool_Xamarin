@@ -4,18 +4,20 @@
              x:local="clr-namespace:NurseTool_Xamarin"
              x:Class="NurseTool_Xamarin.Views.PatientListPage" x:Name="MyPage">
     <ContentPage.Content Padding="0" >
-        <Grid  BackgroundColor="#6dafad">
+        <Grid  BackgroundColor="#def4f7">
             <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="AUTO" />
-                <RowDefinition Height="AUTO" />
+                <RowDefinition Height="60" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-
-            <ScrollView Orientation="Horizontal" BackgroundColor="#f9fffe">
-                <ListView Grid.Row ="0" ItemSelected="PatientLsitviewItemSelected" 
+            <StackLayout Grid.Row="0" Orientation="Vertical" Padding="15">
+                <Label HorizontalOptions="Center" FontSize="Large" Text="Patient list" TextColor="Black" />
+            </StackLayout>
+            <ScrollView Grid.Row ="1" Orientation="Horizontal" BackgroundColor="#f9fffe">
+                <ListView Grid.Row ="1" ItemSelected="PatientLsitviewItemSelected" 
                     ItemsSource="{Binding PatietnList}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -25,7 +27,7 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </ScrollView>
-            <Button Grid.Row ="2" Text ="Select" Clicked="PatientSelectClick" BackgroundColor="#447b9b"/>
+            <Button Grid.Row ="2" Text ="Select" Clicked="PatientSelectClick" BackgroundColor="#3498DB"/>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

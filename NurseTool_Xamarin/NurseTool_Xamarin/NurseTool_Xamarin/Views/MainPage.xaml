@@ -37,7 +37,8 @@
 				TextColor="White" 
                 Clicked="SelectNewPatientClick"
 				Text="{Binding SelectPatientText}" />
-                    <Button 
+            
+            <Button 
 				x:Name="NewPatientButton"
 				Grid.Row="1"
 				Grid.Column="1"
@@ -48,14 +49,15 @@
 				Text="{Binding NewPatientText}"/>
             
             <Button 
-				x:Name="temp"
+				x:Name="DataManagementButton"
 				Grid.Row="2"
 				BackgroundColor="#3498DB"
 				BorderRadius="0"
                 FontSize="Small"
 				TextColor="White" 
-                Clicked="SelectNewPatientClick"
+                Clicked="DataManagementClick"
 				Text="Data management" />
+            
                 <Button 
 				x:Name="temp2"
 				Grid.Row="2"

@@ -20,7 +20,6 @@ namespace NurseTool_Xamarin.ViewModels
         {
             nSServiceClient = new NSServiceClient();
             patientList = new ObservableCollection<Patient>();
-            GetPatients();
         }
 
         public ObservableCollection<Patient> PatietnList

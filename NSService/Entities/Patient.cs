@@ -27,6 +27,8 @@ namespace NSService.Entities
 
         public string Address { get; set; }
 
+        public bool Archived { get; set; }
+
         public ICollection<Examination> Examinations { get; set; } = new List<Examination>();
     }
 }

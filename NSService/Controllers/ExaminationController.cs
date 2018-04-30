@@ -99,7 +99,6 @@ namespace NSService.Controllers
             }
 
             return NotFound();
-
         }
 
         [HttpPost("{patientId}/examination/")]
@@ -126,6 +125,7 @@ namespace NSService.Controllers
                 {
                     Examination examToAddBDT = new Examination();
                     examToAddBDT.Description = String.Empty;
+                    examToAddBDT.Archived = false;
                     examToAddBDT.PatientId = patientId;
                     examToAddBDT.Value = DateTime.Now.ToString();
                     examToAddBDT.ExaminationType = "Body temperature";
@@ -149,9 +149,10 @@ namespace NSService.Controllers
                 {
                     Examination examToAddBDT = new Examination();
                     examToAddBDT.Description = String.Empty;
+                    examToAddBDT.Archived = false;
                     examToAddBDT.PatientId = patientId;
                     examToAddBDT.Value = DateTime.Now.ToString();
-                    examToAddBDT.ExaminationType = "Blood Pressure";
+                    examToAddBDT.ExaminationType = "BloodPressure";
                     BloodPressureData newExamBTD = new BloodPressureData()
                     {
                         SystolicValue = examinationDTO.SystolicValue.Value,
@@ -177,6 +178,7 @@ namespace NSService.Controllers
                 {
                     Examination examToAddBDT = new Examination();
                     examToAddBDT.Description = String.Empty;
+                    examToAddBDT.Archived = false;
                     examToAddBDT.PatientId = patientId;
                     examToAddBDT.Value = DateTime.Now.ToString();
                     examToAddBDT.ExaminationType = "SpO2";
@@ -193,7 +195,6 @@ namespace NSService.Controllers
                 }
 
             }
-
 
             return NotFound();
 

@@ -16,12 +16,19 @@ namespace NurseTool_Xamarin.Views
 	{
         ExaminationViewModel vm;
 
+        Patient _patient;
+
         public ExaminationDetail(Patient patient, Examination examination)
 		{
 			InitializeComponent ();
             vm = new ExaminationViewModel(patient, examination);
             BindingContext = vm;
-
+            _patient = patient;
         }
-	}
+
+        private void ExamBackClick(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new Views.PatientDeatilPage(_patient));
+        }
+    }
 }

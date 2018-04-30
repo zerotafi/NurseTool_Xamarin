@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="NurseTool_Xamarin.Views.PatientDeatilPage">
+             x:Class="NurseTool_Xamarin.Views.DataManagementPage">
     <ContentPage.Content>
         <Grid  BackgroundColor="#def4f7">
             <Grid.RowDefinitions>
@@ -13,20 +13,19 @@
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
             <StackLayout Grid.Row="0" Orientation="Vertical" Padding="15">
-                <Label Text="Patietn Details" />
-                <StackLayout Grid.Row="0" Orientation="Horizontal" Padding="15">
-                <Label Text="Name:"/>
-                    <Label Text ="{Binding Name}"
-                          TextColor="Black"/>
+                <Label HorizontalOptions="Center" FontSize="Large" Text="Data management" TextColor="Black" />
             </StackLayout>
-            </StackLayout>
-            <ScrollView Grid.Row ="1" Orientation="Horizontal" BackgroundColor="#f9fffe">
-                <ListView Grid.Row ="1" ItemSelected="ExaminationListviewItemSelected"
+            <ScrollView Grid.Row="1" Orientation="Horizontal" BackgroundColor="#f9fffe">
+                <ListView Grid.Row ="1" ItemSelected="DataManagementListviewItemSelected"
                     ItemsSource="{Binding ExaminationList}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
+
                             <TextCell Text ="{Binding examinationType}" Detail="{Binding value}"
-                          TextColor="Black"/>
+                               TextColor="Black" />
+                            <!--<Switch IsToggled="{Binding archived}" />-->
+                               
+
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -38,7 +37,7 @@
 				BorderRadius="0"
 				TextColor="White" 
                 Clicked="SelectNewExaminationClick"
-				Text="New Examination" />
+				Text="Archive selected" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

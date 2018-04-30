@@ -11,5 +11,6 @@ namespace NurseTool_Xamarin.Model
         public string description { get; set; }
         public string examinationType { get; set; }
         public string value { get; set; }
+        public bool archived { get; set; }
     }
 }

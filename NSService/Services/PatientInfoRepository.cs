@@ -35,6 +35,11 @@ namespace NSService.Services
             return _context.Patients.Include(x => x.Examinations).FirstOrDefault(x => x.Id == patientId).Examinations.FirstOrDefault(x => x.Id == examinationId);
         }
 
+        public Examination GetExamination(int examinationId)
+        {
+            return _context.Examinations.Where(x => x.Id == examinationId).FirstOrDefault();
+        }
+
         public IExaminationType GetExaminationDetail(int patientId, int examinationId)
         {
             var exam = _context.Patients.Include(x => x.Examinations).FirstOrDefault(x => x.Id == patientId).Examinations.FirstOrDefault(x => x.Id == examinationId);
@@ -94,15 +99,15 @@ namespace NSService.Services
             if (examType == ExaminationType.BloodPressure)
             {
                 BloodPressureData ExanData = examData as BloodPressureData;
-                ExanData.ExaminationId = exam.Id;
                 _context.BloodPressureData.Add(examData as BloodPressureData);
+                ExanData.ExaminationId = exam.Id;
                 _context.SaveChanges();
             }
             if (examType == ExaminationType.BloodSpO2)
             {
                 SpOData ExanData = examData as SpOData;
-                ExanData.ExaminationId = exam.Id;
                 _context.SpOData.Add(examData as SpOData);
+                ExanData.ExaminationId = exam.Id;
                 _context.SaveChanges();
             }
             if (examType == ExaminationType.BodyTemperature)
@@ -110,6 +115,7 @@ namespace NSService.Services
                 BodyTemperatureData ExanData = examData as BodyTemperatureData;
                 ExanData.ExaminationId = exam.Id;
                 _context.BodyTemperatureData.Add(examData as BodyTemperatureData);
+                ExanData.ExaminationId = exam.Id;
                 _context.SaveChanges();
             }
         }

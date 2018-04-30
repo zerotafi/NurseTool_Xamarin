@@ -35,6 +35,26 @@ namespace NSService.Controllers
             _logger = logger;
         }
 
+        [HttpGet("send/{exmiantionId}")]
+        public IActionResult HL7messageSendToServer(int exmiantionId)
+        {
+            var examination = _patientInfoRepository.GetExamination(exmiantionId);
+
+            if(examination == null)
+            {
+                return NotFound();
+            }
+
+            var patient = _patientInfoRepository.GetPatient(examination.PatientId);
+
+            if (patient == null)
+            {
+                return NotFound();
+            }
+
+            return  StatusCode(500, "Internal Server Error");
+        }
+
         [HttpGet()]
         [HttpPost()]
         public IActionResult HL7messageFromServer()
@@ -67,6 +87,7 @@ namespace NSService.Controllers
                 {
                     var pateitnToAdd = new Entities.Patient()
                     {
+                        Archived = true,
                         Name = ((NHapi.Model.V23.Message.ADT_A01)request.Message).PID.PatientName.GivenName.Value + " " + ((NHapi.Model.V23.Message.ADT_A01)request.Message).PID.PatientName.FamilyName.Value,
                         Gender = ((NHapi.Model.V23.Message.ADT_A01)request.Message).PID.Sex.Value,
                         ExternalId = Convert.ToInt32(((NHapi.Model.V23.Message.ADT_A01)request.Message).PID.PatientAccountNumber.ID.Value),
@@ -115,6 +136,7 @@ namespace NSService.Controllers
                             {
                                 Examination examToAddBDT= new Examination();
                                 examToAddBDT.Description = String.Empty;
+                                examToAddBDT.Archived = true;
                                 examToAddBDT.PatientId = patient.Id;
                                 examToAddBDT.Value = DateTime.Now.ToString();
                                 examToAddBDT.ExaminationType = "Body temperature";
@@ -126,6 +148,7 @@ namespace NSService.Controllers
                                 Examination examToAddSPO = new Examination();
                                 examToAddSPO.PatientId = patient.Id;
                                 examToAddSPO.Description = String.Empty;
+                                examToAddSPO.Archived = true;
                                 examToAddSPO.Value = DateTime.Now.ToString();
                                 examToAddSPO.ExaminationType = "SpO2";
                                 newExaamSPo.SPOValue = Convert.ToInt32(((NHapi.Base.Model.AbstractPrimitive)obx.GetObservationValue(0).Data).Value);
@@ -136,6 +159,7 @@ namespace NSService.Controllers
                                 BloodPressureFalg = true;
                                 examToAdd.PatientId = patient.Id;
                                 examToAdd.Description = String.Empty;
+                                examToAdd.Archived = true;
                                 examToAdd.Value = DateTime.Now.ToString();
                                 examToAdd.ExaminationType = "BloodPressure";
                                 newExamData.MeanBloodPressure = Convert.ToInt32(((NHapi.Base.Model.AbstractPrimitive)obx.GetObservationValue(0).Data).Value);
@@ -144,6 +168,7 @@ namespace NSService.Controllers
                             {
                                 BloodPressureFalg = true;
                                 examToAdd.PatientId = patient.Id;
+                                examToAdd.Archived = true;
                                 examToAdd.Description = String.Empty;
                                 examToAdd.Value = DateTime.Now.ToString();
                                 examToAdd.ExaminationType = "BloodPressure";
@@ -153,6 +178,7 @@ namespace NSService.Controllers
                             {
                                 BloodPressureFalg = true;
                                 examToAdd.PatientId = patient.Id;
+                                examToAdd.Archived = true;
                                 examToAdd.Description = String.Empty;
                                 examToAdd.Value = DateTime.Now.ToString();
                                 examToAdd.ExaminationType = "BloodPressure";
@@ -162,6 +188,7 @@ namespace NSService.Controllers
                             {
                                 BloodPressureFalg = true;
                                 examToAdd.PatientId = patient.Id;
+                                examToAdd.Archived = true;
                                 examToAdd.Description = String.Empty;
                                 examToAdd.Value = DateTime.Now.ToString();
                                 examToAdd.ExaminationType = "BloodPressure";
