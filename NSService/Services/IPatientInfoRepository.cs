@@ -34,6 +34,7 @@ namespace NSService.Services
 
         IExaminationType GetExaminationDetail(int patientId, int examinationId);
 
+        void UpdateExaminationStatus(int examId, bool arc);
 
     }
 }

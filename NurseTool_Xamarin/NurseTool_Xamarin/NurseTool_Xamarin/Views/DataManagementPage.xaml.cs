@@ -37,7 +37,13 @@ namespace NurseTool_Xamarin.Views
 
         private void SelectNewExaminationClick(object sender, EventArgs e)
         {
-            //Navigation.PushAsync(new Views.ExamTypeListPAge(_patient));
+            IsBusy = true;
+
+            vm.ArchiveExamination(selectedExamination);
+
+            Navigation.PushAsync(new Views.DataManagementPage());
+
+            IsBusy = false;
         }
     }
 }

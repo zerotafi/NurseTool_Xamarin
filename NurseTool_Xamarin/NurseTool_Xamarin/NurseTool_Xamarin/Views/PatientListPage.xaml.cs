@@ -40,5 +40,45 @@ namespace NurseTool_Xamarin.Views
             Navigation.PushAsync(new Views.PatientDeatilPage(selectedPatient));
         }
 
+
+        private void ExecuteLoadPatients(object sender, EventArgs e)
+        {
+            if (IsBusy)
+                return;
+            IsBusy = true;
+
+            vm.RefreshList();
+
+            IsBusy = false;
+        }
+
+        private Command loadPatientsCommand;
+
+        public Command LoadPatientsCommand
+        {
+            get
+            {
+                return loadPatientsCommand ?? (loadPatientsCommand = new Command(ExecuteLoadPatientsCommand, () =>
+                {
+                    return !IsBusy;
+                }));
+            }
+        }
+
+        private async void ExecuteLoadPatientsCommand()
+        {
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+            LoadPatientsCommand.ChangeCanExecute();
+
+            vm.RefreshList();
+
+            IsBusy = false;
+            LoadPatientsCommand.ChangeCanExecute();
+        }
+
+
     }
 }

@@ -28,6 +28,11 @@ namespace NurseTool_Xamarin.ViewModels
             set { patientList = value; }
         }
 
+        public void RefreshList()
+        {
+            patientList = new ObservableCollection<Patient>();
+        }
+
         public void GetPatients()
         {
            var patientListToAdd = nSServiceClient.GetPatients().Result;

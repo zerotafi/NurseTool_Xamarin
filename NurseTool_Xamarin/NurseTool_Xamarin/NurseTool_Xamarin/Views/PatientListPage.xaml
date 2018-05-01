@@ -17,7 +17,9 @@
                 <Label HorizontalOptions="Center" FontSize="Large" Text="Patient list" TextColor="Black" />
             </StackLayout>
             <ScrollView Grid.Row ="1" Orientation="Horizontal" BackgroundColor="#f9fffe">
-                <ListView Grid.Row ="1" ItemSelected="PatientLsitviewItemSelected" 
+                <ListView Grid.Row ="1" ItemSelected="PatientLsitviewItemSelected" IsPullToRefreshEnabled="True"
+                          Refreshing="ExecuteLoadPatients" RefreshCommand="{Binding LoadPatientsCommand}" 
+                          IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                     ItemsSource="{Binding PatietnList}">
                     <ListView.ItemTemplate>
                         <DataTemplate>

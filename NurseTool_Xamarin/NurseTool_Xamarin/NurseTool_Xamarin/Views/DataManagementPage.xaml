@@ -16,7 +16,7 @@
                 <Label HorizontalOptions="Center" FontSize="Large" Text="Data management" TextColor="Black" />
             </StackLayout>
             <ScrollView Grid.Row="1" Orientation="Horizontal" BackgroundColor="#f9fffe">
-                <ListView Grid.Row ="1" ItemSelected="DataManagementListviewItemSelected"
+                <ListView Grid.Row ="1" ItemSelected="DataManagementListviewItemSelected"  IsRefreshing="{Binding IsBusy, Mode=OneWay}"
                     ItemsSource="{Binding ExaminationList}">
                     <ListView.ItemTemplate>
                         <DataTemplate>

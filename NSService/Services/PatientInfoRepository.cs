@@ -76,6 +76,11 @@ namespace NSService.Services
             }
         }
 
+        public void UpdateExaminationStatus(int examId, bool arc)
+        {
+            _context.Examinations.FirstOrDefault(x => x.Id == examId).Archived = arc;
+            _context.SaveChanges();
+        }
         public IEnumerable<Patient> GetPatients()
         {
             return _context.Patients.OrderBy(x => x.Name).ToList();

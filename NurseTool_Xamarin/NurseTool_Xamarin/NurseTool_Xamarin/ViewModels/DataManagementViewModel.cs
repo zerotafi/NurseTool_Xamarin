@@ -27,6 +27,7 @@ namespace NurseTool_Xamarin.ViewModels
             Patients = nSServiceClient.GetPatients().Result;
 
         }
+
         public void GetExaminations()
         {
             List<Examination> allExam = new List<Examination>();
@@ -37,6 +38,16 @@ namespace NurseTool_Xamarin.ViewModels
                 unArchiveexaminationListToAdd.ForEach(x => allExam.Add(x));
             }
             allExam.ForEach(x => examinationList.Add(x));
+        }
+
+        public bool ArchiveExamination(Examination exam)
+        {
+            bool result = false;
+            if (exam != null)
+            {
+                result = nSServiceClient.ArchiveExamination(exam.id).Result;
+            }
+            return result;
         }
     }
 }

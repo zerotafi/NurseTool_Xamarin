@@ -15,7 +15,7 @@ namespace NurseTool_Xamarin.Services
 
         public NSServiceClient()
         {
-            client = new RestClient("http://8395eb65.ngrok.io");
+            client = new RestClient("http://f5269d56.ngrok.io");
         }
 
         public async Task<List<Patient>> GetPatients()
@@ -135,6 +135,15 @@ namespace NurseTool_Xamarin.Services
 
             IRestResponse response = client.Execute(request);
             var content = response.Content;
+
+            return response.StatusCode == System.Net.HttpStatusCode.OK;
+        }
+
+        public async Task<bool> ArchiveExamination(int examinationID)
+        {
+            string requestString = string.Format("api/HL7Com/send/{0}", examinationID);
+            var request = new RestRequest(requestString, Method.GET);
+            IRestResponse response = client.Execute(request);
 
             return response.StatusCode == System.Net.HttpStatusCode.OK;
         }
