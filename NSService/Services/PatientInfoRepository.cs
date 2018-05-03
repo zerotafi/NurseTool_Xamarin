@@ -25,6 +25,11 @@ namespace NSService.Services
             return _context.Patients.Any(x => x.Id == patientId);
         }
 
+        public bool Auth(string username, string password)
+        {
+            return _context.Users.Count(u => u.Username.Equals(username) && u.Password.Equals(password)) > 0;
+        }
+
         public void AddPatient(Patient patient)
         {
             _context.Patients.Add(patient);

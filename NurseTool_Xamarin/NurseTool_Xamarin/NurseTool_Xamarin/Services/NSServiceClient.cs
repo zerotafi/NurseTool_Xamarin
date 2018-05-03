@@ -15,7 +15,7 @@ namespace NurseTool_Xamarin.Services
 
         public NSServiceClient()
         {
-            client = new RestClient("http://f5269d56.ngrok.io");
+            client = new RestClient("https://fa03065d.ngrok.io");
         }
 
         public async Task<List<Patient>> GetPatients()
@@ -146,6 +146,26 @@ namespace NurseTool_Xamarin.Services
             IRestResponse response = client.Execute(request);
 
             return response.StatusCode == System.Net.HttpStatusCode.OK;
+        }
+
+        public bool AuthUser(User user)
+        {
+            string requestString = string.Format("/api/auth");
+            var request = new RestRequest(requestString, Method.POST);
+            var body = JsonConvert.SerializeObject(user);
+
+            request.AddHeader("Accept", "application/json");
+            request.Parameters.Clear();
+            request.AddParameter("application/json", body, ParameterType.RequestBody);
+
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+            { return false; }
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            { return true; }
+            return false;
         }
 
     }

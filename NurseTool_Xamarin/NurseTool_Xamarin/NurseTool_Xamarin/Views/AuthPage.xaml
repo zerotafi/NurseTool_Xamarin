@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NurseTool_Xamarin.Views.AuthPage">
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="Center"
+                     Orientation="Vertical"
+                     VerticalOptions="Center">
+            <Label Text="Username" />
+            <Entry Text="{Binding Username}" />
+            <Label Text="Password" />
+            <Entry IsPassword="True" Text="{Binding Password}" />
+
+            <Button BackgroundColor="Teal"
+                    BorderRadius="10"
+                    Clicked="AuthClick"
+                    Text="Enter The App"
+                    TextColor="White" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

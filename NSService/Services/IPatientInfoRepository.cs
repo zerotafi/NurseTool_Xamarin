@@ -11,6 +11,8 @@ namespace NSService.Services
     {
         bool PatientExists(int patientId);
 
+        bool Auth(string username, string password);
+
         IEnumerable<Patient> GetPatients();
 
         Patient GetPatient(int patientId, bool includeExaminations = false);

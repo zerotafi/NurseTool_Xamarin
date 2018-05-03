@@ -13,7 +13,7 @@ namespace NurseTool_Xamarin
 		{
 			InitializeComponent();
 
-			MainPage = new NavigationPage( new NurseTool_Xamarin.MainPage());
+			MainPage = new NavigationPage( new NurseTool_Xamarin.Views.AuthPage());
 		}
 
 		protected override void OnStart ()

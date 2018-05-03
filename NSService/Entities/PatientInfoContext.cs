@@ -14,6 +14,7 @@ namespace NSService.Entities
         public DbSet<BloodPressureData> BloodPressureData { get; set; }
         public DbSet<BodyTemperatureData> BodyTemperatureData { get; set; }
         public DbSet<SpOData> SpOData { get; set; }
+        public DbSet<User> Users { get; set; }
 
 
 
