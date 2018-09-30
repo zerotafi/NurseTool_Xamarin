@@ -15,8 +15,7 @@ namespace NSService.Entities
         public DbSet<BodyTemperatureData> BodyTemperatureData { get; set; }
         public DbSet<SpOData> SpOData { get; set; }
         public DbSet<User> Users { get; set; }
-
-
+        public DbSet<WorkFlow> Workflows { get; set; }
 
         public PatientInfoContext(DbContextOptions<PatientInfoContext> options) : base(options)
         {

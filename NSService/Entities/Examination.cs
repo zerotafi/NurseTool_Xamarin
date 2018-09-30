@@ -17,7 +17,10 @@ namespace NSService.Entities
 
         [ForeignKey("PatientId")]
         public Patient Patient { get; set; }
-    
+
+        [ForeignKey("WorkFlowId")]
+        public WorkFlow WorkFlow { get; set; }
+
         [MaxLength(100)]
         public string Description { get; set; }
 

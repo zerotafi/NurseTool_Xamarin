@@ -11,9 +11,10 @@ using System;
 namespace NSService.Migrations
 {
     [DbContext(typeof(PatientInfoContext))]
-    partial class PatientInfoContextModelSnapshot : ModelSnapshot
+    [Migration("20180930115458_UserRole")]
+    partial class UserRole
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

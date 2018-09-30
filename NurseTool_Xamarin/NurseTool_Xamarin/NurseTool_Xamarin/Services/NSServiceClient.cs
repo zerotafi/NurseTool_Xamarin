@@ -3,19 +3,17 @@ using NurseTool_Xamarin.Model;
 using RestSharp;
 using System;
 using System.Collections.Generic;
-using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace NurseTool_Xamarin.Services
 {
-     class NSServiceClient
+    class NSServiceClient
     {
         RestClient client;
 
         public NSServiceClient()
         {
-            client = new RestClient("https://fa03065d.ngrok.io");
+            client = new RestClient("http://0c14d89f.ngrok.io");
         }
 
         public async Task<List<Patient>> GetPatients()

@@ -11,9 +11,10 @@ using System;
 namespace NSService.Migrations
 {
     [DbContext(typeof(PatientInfoContext))]
-    partial class PatientInfoContextModelSnapshot : ModelSnapshot
+    [Migration("20180930114842_WorkFlow")]
+    partial class WorkFlow
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -138,8 +139,6 @@ namespace NSService.Migrations
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Password");
-
-                    b.Property<string>("Role");
 
                     b.Property<string>("Username");
 
