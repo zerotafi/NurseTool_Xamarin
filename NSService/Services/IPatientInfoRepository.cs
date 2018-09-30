@@ -17,6 +17,9 @@ namespace NSService.Services
 
         Patient GetPatient(int patientId, bool includeExaminations = false);
 
+        WorkFlow GetWorkFlow(int workFlowId);
+
+        int CreateWorkFlow(WorkFlow workFlow);
         IEnumerable<Examination> GetExaminations(int patientId);
 
         Examination GetExamination(int patientId, int examinationId);

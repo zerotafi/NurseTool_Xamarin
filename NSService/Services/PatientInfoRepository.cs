@@ -81,6 +81,18 @@ namespace NSService.Services
             }
         }
 
+        public WorkFlow GetWorkFlow(int workFlowId)
+        {
+            return _context.Workflows.Where(x => x.WorkFlowId == workFlowId).FirstOrDefault();
+        }
+
+        public int CreateWorkFlow(WorkFlow workFlow)
+        {
+            _context.Workflows.Add(workFlow);
+            _context.SaveChanges();
+            return workFlow.WorkFlowId;
+        }
+    
         public void UpdateExaminationStatus(int examId, bool arc)
         {
             _context.Examinations.FirstOrDefault(x => x.Id == examId).Archived = arc;
