@@ -167,7 +167,7 @@ namespace NSService.Controllers
                                 examToAddBDT.Value = DateTime.Now.ToString();
                                 examToAddBDT.ExaminationType = "Body temperature";
                                 newExamBTD.TemperatureValue= Convert.ToInt32(((NHapi.Base.Model.AbstractPrimitive)obx.GetObservationValue(0).Data).Value);
-                                _patientInfoRepository.AddExaminationToPatient(patient.Id, examToAddBDT, ExaminationType.BodyTemperature, newExamBTD);
+                                _patientInfoRepository.AddExaminationToPatient(patient.Id, examToAddBDT, ExaminationType.BodyTemperature, newExamBTD, null);
                             }
                             if (obx.ObservationIdentifier.Text.Value == "SpO2")
                             {
@@ -178,7 +178,7 @@ namespace NSService.Controllers
                                 examToAddSPO.Value = DateTime.Now.ToString();
                                 examToAddSPO.ExaminationType = "SpO2";
                                 newExaamSPo.SPOValue = Convert.ToInt32(((NHapi.Base.Model.AbstractPrimitive)obx.GetObservationValue(0).Data).Value);
-                                _patientInfoRepository.AddExaminationToPatient(patient.Id, examToAddSPO, ExaminationType.BloodSpO2, newExaamSPo);
+                                _patientInfoRepository.AddExaminationToPatient(patient.Id, examToAddSPO, ExaminationType.BloodSpO2, newExaamSPo, null);
                             }
                             if (obx.ObservationIdentifier.Text.Value == "Mean blood pressure")
                             {
@@ -223,7 +223,7 @@ namespace NSService.Controllers
                         }
                         if (BloodPressureFalg)
                         {
-                            _patientInfoRepository.AddExaminationToPatient(patient.Id, examToAdd, ExaminationType.BloodPressure, newExamData);
+                            _patientInfoRepository.AddExaminationToPatient(patient.Id, examToAdd, ExaminationType.BloodPressure, newExamData, null);
                         }
 
                     }

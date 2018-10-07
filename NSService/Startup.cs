@@ -84,6 +84,9 @@ namespace NSService
                 cfg.CreateMap<Entities.Patient, Models.PatientCreationDTO>();
                 cfg.CreateMap<Models.PatientCreationDTO, Entities.Patient>();
 
+                cfg.CreateMap<Entities.WorkFlow, Models.WorkFlowDTO>();
+                cfg.CreateMap<Models.WorkFlowDTO, Entities.WorkFlow>();
+
                 cfg.CreateMap<Entities.Examination, Models.ExaminationsDTO>();
                 cfg.CreateMap<Models.ExaminationCreationDTO, Entities.Examination>();
                 cfg.CreateMap<Models.ExamiantionUpdateDTO,Entities.Examination>();

@@ -102,7 +102,7 @@ namespace NSService.Controllers
         }
 
         [HttpPost("{patientId}/examination/")]
-        public IActionResult CreateExamination(int patientId, [FromBody] ExaminationCreationDTO examinationDTO)
+        public IActionResult CreateExamination(int patientId, [FromBody] ExaminationCreationDTO examinationDTO, int workFlowID)
         {
             if (examinationDTO == null)
             {
@@ -118,7 +118,7 @@ namespace NSService.Controllers
             { 
                 return NotFound();
             }
-
+            WorkFlow workFlow = _patientInfoRepository.GetWorkFlow(workFlowID);
             if (examinationDTO.Description == "Body temperature")
             {
                 try
@@ -131,8 +131,7 @@ namespace NSService.Controllers
                     examToAddBDT.ExaminationType = "Body temperature";
                     BodyTemperatureData newExamBTD = new BodyTemperatureData()
                     { TemperatureValue = examinationDTO.TemperatureValue.Value };
-
-                    _patientInfoRepository.AddExaminationToPatient(patientId, examToAddBDT, ExaminationType.BodyTemperature, newExamBTD);
+                    _patientInfoRepository.AddExaminationToPatient(patientId, examToAddBDT, ExaminationType.BodyTemperature, newExamBTD, workFlow);
                     return Ok();
                 }
                 catch(Exception ex)
@@ -161,7 +160,7 @@ namespace NSService.Controllers
                         MeanBloodPressure = examinationDTO.MeanBloodPressure.Value
                     };
 
-                    _patientInfoRepository.AddExaminationToPatient(patientId, examToAddBDT, ExaminationType.BloodPressure, newExamBTD);
+                    _patientInfoRepository.AddExaminationToPatient(patientId, examToAddBDT, ExaminationType.BloodPressure, newExamBTD, workFlow);
                     return Ok();
                 }
                 catch (Exception ex)
@@ -185,7 +184,7 @@ namespace NSService.Controllers
                     SpOData newExamBTD = new SpOData()
                     {  SPOValue = examinationDTO.SPOValue.Value};
 
-                    _patientInfoRepository.AddExaminationToPatient(patientId, examToAddBDT, ExaminationType.BloodSpO2, newExamBTD);
+                    _patientInfoRepository.AddExaminationToPatient(patientId, examToAddBDT, ExaminationType.BloodSpO2, newExamBTD, workFlow);
                     return Ok();
                 }
                 catch (Exception ex)

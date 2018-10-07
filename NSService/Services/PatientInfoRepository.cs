@@ -13,6 +13,7 @@ namespace NSService.Services
         NLog.Logger _logger;
         public PatientInfoContext _context;
 
+        // Ctor.
         public PatientInfoRepository(PatientInfoContext context)
         {
             _context = context;
@@ -20,26 +21,66 @@ namespace NSService.Services
             _logger.Log(NLog.LogLevel.Info, "PatientInfoRepository  created.");
         }
 
-        public bool PatientExists(int patientId)
+        // General and aut.
+        public bool Save()
         {
-            return _context.Patients.Any(x => x.Id == patientId);
+            return (_context.SaveChanges() >= 0);
         }
-
         public bool Auth(string username, string password)
         {
             return _context.Users.Count(u => u.Username.Equals(username) && u.Password.Equals(password)) > 0;
         }
+        public User GetUserById(int userId)
+        {
+            return _context.Users.FirstOrDefault(x => x.Id == userId);
+        }
 
+        // Patient part.
+        public bool PatientExists(int patientId)
+        {
+            return _context.Patients.Any(x => x.Id == patientId);
+        }
         public void AddPatient(Patient patient)
         {
             _context.Patients.Add(patient);
         }
+        public Patient GetPatient(int patientId, bool includeExaminations)
+        {
+            if (includeExaminations)
+            {
+                return _context.Patients.Include(x => x.Examinations).Where(x => x.Id == patientId).FirstOrDefault();
+            }
+            else
+            {
+                return _context.Patients.Where(x => x.Id == patientId).FirstOrDefault();
+            }
+        }
 
+        public IEnumerable<Patient> GetPatients()
+        {
+            return _context.Patients.OrderBy(x => x.Name).ToList();
+        }
+
+        public Patient GetPatientByExtID(int extId)
+        {
+            return _context.Patients.FirstOrDefault(x => x.ExternalId == extId);
+        }
+
+        public bool PatientExistsByExtId(int extId)
+        {
+            return _context.Patients.Any(x => x.ExternalId == extId);
+        }
+
+        // Exam part.
         public Examination GetExamination(int patientId, int examinationId)
         {
             return _context.Patients.Include(x => x.Examinations).FirstOrDefault(x => x.Id == patientId).Examinations.FirstOrDefault(x => x.Id == examinationId);
         }
-
+        public void UpdateExaminationStatus(int examId, bool arc)
+        {
+            _context.Examinations.FirstOrDefault(x => x.Id == examId).Archived = arc;
+            _context.SaveChanges();
+        }
         public Examination GetExamination(int examinationId)
         {
             return _context.Examinations.Where(x => x.Id == examinationId).FirstOrDefault();
@@ -69,54 +110,11 @@ namespace NSService.Services
             return result;
         }
 
-        public Patient GetPatient(int patientId, bool includeExaminations)
-        {
-            if (includeExaminations)
-            {
-                return _context.Patients.Include(x => x.Examinations).Where(x => x.Id == patientId).FirstOrDefault();
-            }
-            else
-            {
-                return _context.Patients.Where(x => x.Id == patientId).FirstOrDefault();
-            }
-        }
-
-        public WorkFlow GetWorkFlow(int workFlowId)
-        {
-            return _context.Workflows.Where(x => x.WorkFlowId == workFlowId).FirstOrDefault();
-        }
-
-        public int CreateWorkFlow(WorkFlow workFlow)
-        {
-            _context.Workflows.Add(workFlow);
-            _context.SaveChanges();
-            return workFlow.WorkFlowId;
-        }
-    
-        public void UpdateExaminationStatus(int examId, bool arc)
-        {
-            _context.Examinations.FirstOrDefault(x => x.Id == examId).Archived = arc;
-            _context.SaveChanges();
-        }
-        public IEnumerable<Patient> GetPatients()
-        {
-            return _context.Patients.OrderBy(x => x.Name).ToList();
-        }
-
-        public Patient GetPatientByExtID(int extId)
-        {
-            return _context.Patients.FirstOrDefault(x => x.ExternalId == extId);
-        }
-
-        public bool PatientExistsByExtId(int extId)
-        {
-            return _context.Patients.Any(x => x.ExternalId == extId);
-        }
-
-        public void AddExaminationToPatient(int patientId, Examination exam, ExaminationType examType, IExaminationType examData)
+        public void AddExaminationToPatient(int patientId, Examination exam, ExaminationType examType, IExaminationType examData, WorkFlow workFlow)
         {
             var patient = GetPatient(patientId, true);
             patient.Examinations.Add(exam);
+            exam.WorkFlow = workFlow;
             _context.SaveChanges();
             if (examType == ExaminationType.BloodPressure)
             {
@@ -147,9 +145,39 @@ namespace NSService.Services
             _context.Examinations.Remove(exam);
         }
 
-        public bool Save()
+        // WorkFlow part.
+        public WorkFlow GetWorkFlow(int workFlowId)
         {
-            return (_context.SaveChanges() >= 0);
+            return _context.Workflows.Where(x => x.WorkFlowId == workFlowId).FirstOrDefault();
+        }
+
+        public int? CreateWorkFlow(WorkFlow workFlow)
+        {
+            _context.Workflows.Add(workFlow);
+            _context.SaveChanges();
+            return workFlow.WorkFlowId;
+        }
+
+        public List<WorkFlow> GetWorkFlowsForPatients(int patientId)
+        {
+            return _context.Workflows.Where(x => x.Patient.Id == patientId).ToList();
+        }
+
+        public List<WorkFlowStep> GetworkFlowSteps(int workFlowId)
+        {
+          return _context.Workflows.Where(x => x.WorkFlowId == workFlowId).FirstOrDefault().WorkFlowSteps.ToList();
+        }
+
+        public int AddWorkFowStepToWorkFlow(int workFlowId, WorkFlowStep workFlowStep)
+        {
+            _context.Workflows.Where(x => x.WorkFlowId == workFlowId).FirstOrDefault().WorkFlowSteps.Add(workFlowStep);
+            _context.SaveChanges();
+            return workFlowStep.WorkFlowStepId;
+        }
+
+        public WorkFlowStep GetworkFlowStep(int workFlowId,int workFlowStepId)
+        {
+            return _context.Workflows.Where(x => x.WorkFlowId == workFlowId).FirstOrDefault().WorkFlowSteps.Where(o => o.WorkFlowStepId == workFlowStepId).FirstOrDefault();
         }
     }
 }
