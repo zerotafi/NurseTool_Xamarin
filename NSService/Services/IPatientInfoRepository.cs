@@ -20,7 +20,7 @@ namespace NSService.Services
         // General and auth part.
         bool Save();
         bool Auth(string username, string password);
-        User GetUserById(int userId);
+        User GetUserByName(string userName);
 
         // Exam part.
         IExaminationType GetExaminationDetail(int patientId, int examinationId);

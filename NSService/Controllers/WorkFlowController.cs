@@ -47,14 +47,14 @@ namespace NSService.Controllers
             return Ok(workflowResult);
         }
 
-        [HttpGet("patient/{patientId}/userInfo/{userId}")]
-        public IActionResult CreateWorkFlow(int patientId, int userId)
+        [HttpGet("patient/{patientId}/userInfo/{userName}")]
+        public IActionResult CreateWorkFlow(int patientId, string userName)
         {
             WorkFlow workFlow = new WorkFlow();
             var patientFound =_patientInfoRepository.GetPatient(patientId, false);
             if (patientFound == null) { return NotFound(); }
             workFlow.Patient = patientFound;
-            var userFound = _patientInfoRepository.GetUserById(userId);
+            var userFound = _patientInfoRepository.GetUserByName(userName);
             if (userFound == null) { return NotFound(); }
             workFlow.Username = userFound.Username;
             workFlow.WorkFlowName = "default - not set";

@@ -30,9 +30,9 @@ namespace NSService.Services
         {
             return _context.Users.Count(u => u.Username.Equals(username) && u.Password.Equals(password)) > 0;
         }
-        public User GetUserById(int userId)
+        public User GetUserByName(string userName)
         {
-            return _context.Users.FirstOrDefault(x => x.Id == userId);
+            return _context.Users.FirstOrDefault(x => x.Username == userName);
         }
 
         // Patient part.

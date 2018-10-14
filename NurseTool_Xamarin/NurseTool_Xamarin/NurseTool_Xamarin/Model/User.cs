@@ -4,7 +4,7 @@ using System.Text;
 
 namespace NurseTool_Xamarin.Model
 {
-    class User
+    public class User
     {
         public string Username { get; set; }
 

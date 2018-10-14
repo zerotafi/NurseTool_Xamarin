@@ -13,10 +13,12 @@ namespace NurseTool_Xamarin.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class AuthPage : ContentPage
 	{
-         AuthViewModel vm;
+        AuthViewModel vm;
+        bool lockobj = false;
 		public AuthPage ()
 		{
 			InitializeComponent ();
+            lockobj = false;
             vm = new AuthViewModel();
             BindingContext = vm;
         }
@@ -25,7 +27,11 @@ namespace NurseTool_Xamarin.Views
         {
             if (vm.Auth())
             {
-                Navigation.PushAsync(new MainPage());
+                if (!lockobj)
+                {
+                    Navigation.PushAsync(new MainPage(vm.User));
+                    lockobj = true;
+                }
             }
             else
             {

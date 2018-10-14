@@ -1,4 +1,5 @@
-﻿using NurseTool_Xamarin.ViewModels;
+﻿using NurseTool_Xamarin.Model;
+using NurseTool_Xamarin.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,14 +12,16 @@ namespace NurseTool_Xamarin
 	public partial class MainPage : ContentPage
 	{
         MainViewModel vm;
+        User myUser;
 
-        public MainPage()
+        public MainPage(User user)
 		{
 			InitializeComponent();
             vm = new MainViewModel();
             BindingContext = vm;
-        
-		}
+            myUser = user;
+
+        }
         
         private void DataManagementClick(object sender, EventArgs e)
         {
@@ -28,6 +31,11 @@ namespace NurseTool_Xamarin
         private void SelectNewPatientClick(object sender, EventArgs e)
         {
             Navigation.PushAsync(new Views.PatientListPage());
+        }
+
+        private void WorkFlowClick(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new Views.PatientListForWorkFlow(myUser));
         }
 
     }

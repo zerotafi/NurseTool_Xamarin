@@ -166,5 +166,18 @@ namespace NurseTool_Xamarin.Services
             return false;
         }
 
+        public async Task<WorkFlow> GetWorkFlow(User user, int patientId)
+        {
+            string requestString = string.Format("patient/{0}", patientId);
+            var request = new RestRequest(requestString, Method.GET);
+            WorkFlow Item = new WorkFlow();
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+
+            Item = JsonConvert.DeserializeObject<WorkFlow>(content);
+            return Item;
+
+        }
+
     }
 }
