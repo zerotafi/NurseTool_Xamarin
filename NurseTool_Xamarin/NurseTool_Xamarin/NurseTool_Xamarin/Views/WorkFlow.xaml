@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="NurseTool_Xamarin.Views.WorkFlow">
     <ContentPage.Content>
-        <!--<Grid  BackgroundColor="#def4f7">
+        <Grid  BackgroundColor="#def4f7">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="AUTO" />
@@ -21,11 +21,11 @@
                 </StackLayout>
             </StackLayout>
             <ScrollView Orientation="Horizontal" BackgroundColor="#f9fffe">
-                <ListView Grid.Row ="0" ItemSelected="ExaminationTypeListviewItemSelected"
-                    ItemsSource="{Binding ExaminationTypeList}" >
+                <ListView Grid.Row ="0" 
+                    ItemsSource="{Binding WorkFlowList}" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Text ="{Binding typeName}"
+                            <TextCell Text ="{Binding workFlowName}"
                           TextColor="Black"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -37,9 +37,9 @@
 				BackgroundColor="#3498DB"
 				BorderRadius="0"
 				TextColor="White" 
-                Clicked="ExamTypeNextClick"
-				Text="Next" />
-        </Grid>-->
+               
+				Text="OK" />
+        </Grid>
 
     </ContentPage.Content>
 </ContentPage>

@@ -42,7 +42,7 @@ namespace NSService.Controllers
 
             if (workflow == null) { return NotFound(); }
 
-            var workflowResult = Mapper.Map<PatientDTO>(workflow);
+            var workflowResult = Mapper.Map<IEnumerable<WorkFlowDTO>>(workflow);
 
             return Ok(workflowResult);
         }

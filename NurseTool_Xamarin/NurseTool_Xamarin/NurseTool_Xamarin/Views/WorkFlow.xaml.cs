@@ -14,7 +14,7 @@ namespace NurseTool_Xamarin.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class WorkFlow : ContentPage
 	{
-        Patient selectedPatient = null;
+        Patient myPatient = null;
         WorkFlowViewModel vm;
         User myUser;
 
@@ -23,6 +23,8 @@ namespace NurseTool_Xamarin.Views
 			InitializeComponent ();
             vm = new WorkFlowViewModel(user, patient);
             BindingContext = vm;
+            myUser = user;
+            myPatient = patient;
         }
 	}
 }

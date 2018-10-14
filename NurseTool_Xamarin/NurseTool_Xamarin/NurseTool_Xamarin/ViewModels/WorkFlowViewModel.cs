@@ -33,11 +33,13 @@ namespace NurseTool_Xamarin.ViewModels
             deatilPatient = patient_incoming;
             workFlowList = new ObservableCollection<WorkFlow>();
             nSServiceClient = new NSServiceClient();
+            GetWorkFlows();
         }
         public void GetWorkFlows()
         {
-             var workFlowList = nSServiceClient.GetWorkFlow(myUser, deatilPatient.id).Result;
-            //examinationListToAdd.ForEach(x => examinationList.Add(x));
+            workFlowList.Clear();
+            var workFlowListLoc = nSServiceClient.GetWorkFlow(myUser, deatilPatient.id).Result;
+            workFlowListLoc.ForEach(x => workFlowList.Add(x));
         }
 
     }
