@@ -20,6 +20,8 @@ namespace NurseTool_Xamarin.ViewModels
             set { workFlowList = value; }
         }
 
+        public WorkFlow SelectedWorkFlow { get; set; }
+
         public Patient deatilPatient { get; set; }
         public string Name
         {

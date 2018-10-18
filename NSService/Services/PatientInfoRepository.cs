@@ -165,7 +165,8 @@ namespace NSService.Services
 
         public List<WorkFlowStep> GetworkFlowSteps(int workFlowId)
         {
-          return _context.Workflows.Where(x => x.WorkFlowId == workFlowId).FirstOrDefault().WorkFlowSteps.ToList();
+           var workFlow = _context.Workflows.Include(x => x.WorkFlowSteps).Where(x => x.WorkFlowId == workFlowId).FirstOrDefault();
+           return workFlow.WorkFlowSteps.ToList();
         }
 
         public int AddWorkFowStepToWorkFlow(int workFlowId, WorkFlowStep workFlowStep)

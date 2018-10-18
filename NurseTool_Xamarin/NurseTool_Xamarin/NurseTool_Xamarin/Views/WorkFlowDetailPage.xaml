@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="NurseTool_Xamarin.Views.WorkFlow">
+             x:Class="NurseTool_Xamarin.Views.WorkFlowDetailPage">
     <ContentPage.Content>
         <Grid  BackgroundColor="#def4f7">
             <Grid.RowDefinitions>
@@ -21,34 +21,30 @@
                 </StackLayout>
             </StackLayout>
             <ScrollView Orientation="Horizontal" BackgroundColor="#f9fffe">
-                <ListView Grid.Row ="0"  ItemSelected="WorkFlowListviewItemSelected"
-                    ItemsSource="{Binding WorkFlowList}" >
+                <ListView Grid.Row ="0"  
+                    ItemsSource="{Binding WorkFlowStep}" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Text ="{Binding workFlowName}"
+                            <TextCell Text ="{Binding workFlowStepName}"
                           TextColor="Black"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </ScrollView>
-            <StackLayout Grid.Row="1" Orientation="Vertical" Padding="5">
-                <Button 
+            <Button 
 				x:Name="WorkFlowDeatilNextNextButton"
 				Grid.Row="1"
 				BackgroundColor="#3498DB"
 				BorderRadius="0"
 				TextColor="White"
-                Clicked="SelectNewWFDeatilClick"
-				Text="Select" />
-                <Button 
+				Text="Perform WorkFlow" />
+            <Button 
 				x:Name="ExamTypeNextButton"
 				Grid.Row="1"
 				BackgroundColor="#3498DB"
 				BorderRadius="0"
 				TextColor="White" 
-				Text="Add WorkFlow" />
-            </StackLayout>
+				Text="Add WorkFlowStep" />
         </Grid>
-
     </ContentPage.Content>
 </ContentPage>

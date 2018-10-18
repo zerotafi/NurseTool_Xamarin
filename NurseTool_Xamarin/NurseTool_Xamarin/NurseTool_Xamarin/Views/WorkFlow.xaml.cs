@@ -26,5 +26,21 @@ namespace NurseTool_Xamarin.Views
             myUser = user;
             myPatient = patient;
         }
-	}
+
+
+        private void WorkFlowListviewItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem == null)
+            {
+                return;
+            }
+            vm.SelectedWorkFlow = e.SelectedItem as Model.WorkFlow;
+        }
+
+        private void SelectNewWFDeatilClick(object sender, EventArgs e)
+        {
+            if(vm.SelectedWorkFlow != null)
+            Navigation.PushAsync(new Views.WorkFlowDetailPage(myPatient, myUser, vm.SelectedWorkFlow));
+        }
+    }
 }

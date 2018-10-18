@@ -13,7 +13,7 @@ namespace NurseTool_Xamarin.Services
 
         public NSServiceClient()
         {
-            client = new RestClient("http://89d6f927.ngrok.io");
+            client = new RestClient("http://124527fe.ngrok.io");
         }
 
         public async Task<List<Patient>> GetPatients()
@@ -179,5 +179,17 @@ namespace NurseTool_Xamarin.Services
 
         }
 
+        public async Task<List<WorkFlowStep>> GetWorkFlowSteps(int workFlowID)
+        {
+            string requestString = string.Format("/api/workflow/{0}/workFlowSteps", workFlowID);
+            var request = new RestRequest(requestString, Method.GET);
+            List<WorkFlowStep> Items = new List<WorkFlowStep>();
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+            Items = JsonConvert.DeserializeObject<List<WorkFlowStep>>(content);
+
+            return Items;
+
+        }
     }
 }

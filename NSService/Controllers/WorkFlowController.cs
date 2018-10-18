@@ -35,6 +35,18 @@ namespace NSService.Controllers
             return Ok(workflowResult);
         }
 
+        [HttpGet("{workflowId}/workFlowSteps")]
+        public IActionResult GetWorkFlowSteps(int workflowId)
+        {
+            var workflowSteps = _patientInfoRepository.GetworkFlowSteps(workflowId);
+
+            if (workflowSteps == null) { return NotFound(); }
+
+            var workflowResult = Mapper.Map<IEnumerable<WorkFlowStepDTO>>(workflowSteps);
+
+            return Ok(workflowResult);
+        }
+
         [HttpGet("patient/{patientId}")]
         public IActionResult GetWorkFlowForPatient(int patientId)
         {
@@ -70,20 +82,6 @@ namespace NSService.Controllers
             wfStep.WorkFlowStepName = wfStepName;
             int wfStepID = _patientInfoRepository.AddWorkFowStepToWorkFlow(workFlowID, wfStep);
             return Ok(wfStepID);
-        }
-
-
-
-        [HttpPost]
-        public IActionResult SaveWorkFlow()
-        {
-            return View();
-        }
-
-        [HttpGet("{workflowId}")]
-        public IActionResult AddNewItemForWorkFlow(int workflowId)
-        {
-            return View();
         }
     }
 }
