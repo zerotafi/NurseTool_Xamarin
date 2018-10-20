@@ -22,6 +22,8 @@ namespace NurseTool_Xamarin.ViewModels
 
         public WorkFlow SelectedWorkFlow { get; set; }
 
+        public List<WorkFlowStep> wfStepList = new List<WorkFlowStep>();
+
         public Patient deatilPatient { get; set; }
         public string Name
         {
@@ -42,6 +44,16 @@ namespace NurseTool_Xamarin.ViewModels
             workFlowList.Clear();
             var workFlowListLoc = nSServiceClient.GetWorkFlow(myUser, deatilPatient.id).Result;
             workFlowListLoc.ForEach(x => workFlowList.Add(x));
+        }
+
+        public void GetWorkFlowSteps()
+        {
+            if (SelectedWorkFlow != null)
+            {
+                wfStepList.Clear();
+                var workFlowStepListLoc = nSServiceClient.GetWorkFlowSteps(SelectedWorkFlow.workFlowId.Value).Result;
+                workFlowStepListLoc.ForEach(x => wfStepList.Add(x));
+            }
         }
 
     }

@@ -16,24 +16,59 @@ namespace NurseTool_Xamarin.Views
 	{
         Patient _patient;
         NewSPOViewModel vm;
-		public AddNewSPOPage (Patient patient)
+        List<WorkFlowStep> wfSteps = null;
+        User myUser;
+
+        public AddNewSPOPage (Patient patient, List<WorkFlowStep> wfsteps, User user)
 		{
 			InitializeComponent ();
             vm = new NewSPOViewModel(patient);
             BindingContext = vm;
             _patient = patient;
+            wfSteps = wfsteps;
+            myUser = user;
         }
 
         private void ExamSavetClick(object sender, EventArgs e)
         {
-            if (vm.SaveExamination())
+            if (wfSteps == null)
             {
-                Navigation.PushAsync(new Views.PatientDeatilPage(_patient));
+                if (vm.SaveExamination())
+                {
+                    Navigation.PushAsync(new Views.PatientDeatilPage(_patient));
+                }
+                else
+                {
+                    //popup 
+                }
             }
             else
             {
-               //popup 
+                vm.SaveExamination();
+                var wfStepLsit = wfSteps;
+                WorkFlowStep wfStep = wfStepLsit.FirstOrDefault();
+                wfStepLsit.Remove(wfStep);
+                if (wfStep != null)
+                {
+                    switch (wfStep.workFlowStepName)
+                    {
+                        case "BloodPressure":
+                            Navigation.PushAsync(new Views.AddNewBloodPressurePage(_patient, wfStepLsit, myUser));
+                            break;
+                        case "Body temperature":
+                            Navigation.PushAsync(new Views.AddNewBodyTempPage(_patient, wfStepLsit, myUser));
+                            break;
+                        case "SpO2":
+                            Navigation.PushAsync(new Views.AddNewSPOPage(_patient, wfStepLsit, myUser));
+                            break;
+                    }
+                }
+                else
+                {
+                    Navigation.PushAsync(new Views.WorkFlow(_patient, myUser));
+                }
             }
-        }
+
+         }
     }
 }

@@ -35,6 +35,7 @@ namespace NurseTool_Xamarin.Views
                 return;
             }
             vm.SelectedWorkFlow = e.SelectedItem as Model.WorkFlow;
+            vm.GetWorkFlowSteps();
         }
 
         private void SelectNewWFDeatilClick(object sender, EventArgs e)
@@ -52,7 +53,31 @@ namespace NurseTool_Xamarin.Views
         {
                 Navigation.PushAsync(new Views.AddWorkFlowPage(myPatient, myUser));
         }
-        
 
+        private void WorkFlowPerformButtonClick(object sender, EventArgs e)
+        {
+            if (vm.wfStepList.Count > 0)
+            {
+                var wfStepLsit = vm.wfStepList;
+                WorkFlowStep wfStep = wfStepLsit.FirstOrDefault();
+                wfStepLsit.Remove(wfStep);
+                if (wfStep != null)
+                {
+                    switch (wfStep.workFlowStepName)
+                    {
+                        case "BloodPressure":
+                            Navigation.PushAsync(new Views.AddNewBloodPressurePage(myPatient, wfStepLsit, myUser));
+                            break;
+                        case "Body temperature":
+                            Navigation.PushAsync(new Views.AddNewBodyTempPage(myPatient, wfStepLsit, myUser));
+                            break;
+                        case "SpO2":
+                            Navigation.PushAsync(new Views.AddNewSPOPage(myPatient, wfStepLsit, myUser));
+                            break;
+                    }
+                }
+              
+            }
+        }
     }
 }

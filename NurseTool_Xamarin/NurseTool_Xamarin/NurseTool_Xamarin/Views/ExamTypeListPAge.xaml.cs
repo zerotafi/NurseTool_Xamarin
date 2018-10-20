@@ -41,15 +41,15 @@ namespace NurseTool_Xamarin.Views
             {
                 if (examType.typeName == "BodyTemperature")
                 {
-                    Navigation.PushAsync(new Views.AddNewBodyTempPage(_patient));
+                    Navigation.PushAsync(new Views.AddNewBodyTempPage(_patient, null, null));
                 }
                 if (examType.typeName == "BloodPressure")
                 {
-                    Navigation.PushAsync(new Views.AddNewBloodPressurePage(_patient));
+                    Navigation.PushAsync(new Views.AddNewBloodPressurePage(_patient, null, null));
                 }
                 if (examType.typeName == "BloodSpO2")
                 {
-                    Navigation.PushAsync(new Views.AddNewSPOPage(_patient));
+                    Navigation.PushAsync(new Views.AddNewSPOPage(_patient, null, null));
                 }
             }
         }
