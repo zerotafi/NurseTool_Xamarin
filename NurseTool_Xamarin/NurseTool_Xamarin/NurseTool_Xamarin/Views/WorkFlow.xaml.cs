@@ -42,5 +42,18 @@ namespace NurseTool_Xamarin.Views
             if(vm.SelectedWorkFlow != null)
             Navigation.PushAsync(new Views.WorkFlowDetailPage(myPatient, myUser, vm.SelectedWorkFlow));
         }
+
+        private void WorkFlowCancelButtonClicked(object sender, EventArgs e)
+        {
+                Navigation.PushAsync(new Views.PatientListForWorkFlow(myUser));
+        }
+
+        private void WorkFlowAddButtonClicked(object sender, EventArgs e)
+        {
+            if (vm.SelectedWorkFlow != null)
+                Navigation.PushAsync(new Views.WorkFlowDetailPage(myPatient, myUser, vm.SelectedWorkFlow));
+        }
+        
+
     }
 }

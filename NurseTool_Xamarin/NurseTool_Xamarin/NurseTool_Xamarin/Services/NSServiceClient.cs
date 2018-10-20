@@ -13,7 +13,7 @@ namespace NurseTool_Xamarin.Services
 
         public NSServiceClient()
         {
-            client = new RestClient("http://124527fe.ngrok.io");
+            client = new RestClient("http://d5ca4377.ngrok.io");
         }
 
         public async Task<List<Patient>> GetPatients()
@@ -189,7 +189,28 @@ namespace NurseTool_Xamarin.Services
             Items = JsonConvert.DeserializeObject<List<WorkFlowStep>>(content);
 
             return Items;
-
         }
+
+        public async Task<WorkFlow> CreateNewWF(User user, int patientId, string wfName)
+        {
+            string requestString = string.Format("/api/workflow/patient/{0}/userInfo/{1}//WFName/{2}", patientId, user.Username, wfName);
+            var request = new RestRequest(requestString, Method.GET);
+            WorkFlow Item = new WorkFlow();
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+            Item = JsonConvert.DeserializeObject<WorkFlow>(content);
+
+            return Item;
+        }
+        public async Task<bool> AddWorkFlowStepToWorkFlow(int wfID, string WFStepName)
+        {
+            string requestString = string.Format("/api/workflow/workFlowId/{0}/wfStepName/{1}", wfID, WFStepName);
+            var request = new RestRequest(requestString, Method.GET);
+            WorkFlow Item = new WorkFlow();
+            IRestResponse response = client.Execute(request);
+            var content = response.Content;
+            return response.StatusCode == System.Net.HttpStatusCode.OK;
+        } 
+
     }
 }

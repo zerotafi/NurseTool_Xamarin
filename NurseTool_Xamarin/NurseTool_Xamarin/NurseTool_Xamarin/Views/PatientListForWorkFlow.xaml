@@ -5,9 +5,9 @@
     <ContentPage.Content>
         <Grid  BackgroundColor="#def4f7">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="60" />
+                <RowDefinition Height="AUTO" />
+                <RowDefinition Height="AUTO" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
@@ -28,7 +28,26 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </ScrollView>
-            <Button Grid.Row ="2" Text ="Select" Clicked="PatientSelectClick" BackgroundColor="#3498DB"/>
+            <StackLayout Grid.Row="2" Orientation="Vertical" Padding="5">
+                <Button 
+				x:Name="PatientListWorkFlowSelectButton"
+				Grid.Row="2"
+				BackgroundColor="#3498DB"
+				BorderRadius="0"
+				TextColor="White"
+                Clicked="PatientSelectClick"
+				Text="Select" />
+
+                <Button 
+				x:Name="PatientListWorkFlowSelectCancelButton"
+				Grid.Row="2"
+				BackgroundColor="#3498DB"
+				BorderRadius="0"
+				TextColor="White"
+                Clicked="PatientSelectCancelClick"
+				Text="Cancel" />
+               
+            </StackLayout>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

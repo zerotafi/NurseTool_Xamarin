@@ -37,6 +37,12 @@ namespace NurseTool_Xamarin.Views
                 Navigation.PushAsync(new Views.WorkFlow(selectedPatient, myUser));
         }
 
+        private void PatientSelectCancelClick(object sender, EventArgs e)
+        {
+                Navigation.PushAsync(new MainPage(myUser));
+        }
+        
+
         private Command loadPatientsCommand;
 
         public Command LoadPatientsCommand

@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="NurseTool_Xamarin.Views.WorkFlow">
+             x:Class="NurseTool_Xamarin.Views.WFStepSelectorPage">
     <ContentPage.Content>
         <Grid  BackgroundColor="#def4f7">
             <Grid.RowDefinitions>
@@ -21,43 +21,34 @@
                 </StackLayout>
             </StackLayout>
             <ScrollView Orientation="Horizontal" BackgroundColor="#f9fffe">
-                <ListView Grid.Row ="0"  ItemSelected="WorkFlowListviewItemSelected"
-                    ItemsSource="{Binding WorkFlowList}" >
+                <ListView Grid.Row ="0"  ItemSelected="WFStepListviewItemSelected"
+                    ItemsSource="{Binding WorkFlowStep}" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Text ="{Binding workFlowName}"
+                            <TextCell Text ="{Binding workFlowStepName}"
                           TextColor="Black"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </ScrollView>
             <StackLayout Grid.Row="1" Orientation="Vertical" Padding="5">
-                <Button 
-				x:Name="WorkFlowDeatilNextNextButton"
+            <Button 
+				x:Name="WorkFlowStepAddButton"
 				Grid.Row="1"
 				BackgroundColor="#3498DB"
 				BorderRadius="0"
 				TextColor="White"
-                Clicked="SelectNewWFDeatilClick"
-				Text="Select" />
-                <Button 
-				x:Name="WorkFlowAddButton"
+                Clicked="WorkFlowStepAddButtonClicked"
+				Text="Add WorkFlowStep" />
+            <Button 
+				x:Name="WfStepCancelButton"
 				Grid.Row="1"
 				BackgroundColor="#3498DB"
 				BorderRadius="0"
-                Clicked="WorkFlowAddButtonClicked"
-				TextColor="White" 
-				Text="Add WorkFlow" />
-                <Button 
-				x:Name="WorkFlowCancelButton"
-				Grid.Row="1"
-				BackgroundColor="#3498DB"
-                Clicked="WorkFlowCancelButtonClicked"
-				BorderRadius="0"
-				TextColor="White" 
+				TextColor="White"
+                Clicked="WfStepCancelButtonClicked"
 				Text="Cancel" />
-            </StackLayout>
+             </StackLayout>
         </Grid>
-
     </ContentPage.Content>
 </ContentPage>

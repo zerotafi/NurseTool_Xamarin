@@ -31,20 +31,24 @@
                     </ListView.ItemTemplate>
                 </ListView>
             </ScrollView>
+            <StackLayout Grid.Row="1" Orientation="Vertical" Padding="5">
             <Button 
-				x:Name="WorkFlowDeatilNextNextButton"
-				Grid.Row="1"
-				BackgroundColor="#3498DB"
-				BorderRadius="0"
-				TextColor="White"
-				Text="Perform WorkFlow" />
-            <Button 
-				x:Name="ExamTypeNextButton"
+				x:Name="WorkFlowDeatilAddmButton"
 				Grid.Row="1"
 				BackgroundColor="#3498DB"
 				BorderRadius="0"
 				TextColor="White" 
+                Clicked="AddNewWFStepClick"
 				Text="Add WorkFlowStep" />
+                <Button 
+				x:Name="WorkFlowDeatilPerformButton"
+				Grid.Row="1"
+				BackgroundColor="#3498DB"
+				BorderRadius="0"
+                Clicked="WorkFlowStepAddCancelButtonClick"
+				TextColor="White"
+				Text="Canclel"/>
+            </StackLayout>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

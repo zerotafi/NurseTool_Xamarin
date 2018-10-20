@@ -59,8 +59,8 @@ namespace NSService.Controllers
             return Ok(workflowResult);
         }
 
-        [HttpGet("patient/{patientId}/userInfo/{userName}")]
-        public IActionResult CreateWorkFlow(int patientId, string userName)
+        [HttpGet("patient/{patientId}/userInfo/{userName}/WFName/{wfName}")]
+        public IActionResult CreateWorkFlow(int patientId, string userName, string wfName)
         {
             WorkFlow workFlow = new WorkFlow();
             var patientFound =_patientInfoRepository.GetPatient(patientId, false);
@@ -69,10 +69,11 @@ namespace NSService.Controllers
             var userFound = _patientInfoRepository.GetUserByName(userName);
             if (userFound == null) { return NotFound(); }
             workFlow.Username = userFound.Username;
-            workFlow.WorkFlowName = "default - not set";
+            workFlow.WorkFlowName = wfName;
             int? workflowID = _patientInfoRepository.CreateWorkFlow(workFlow);
             if (workflowID == null) { return NotFound(); }
-            return Ok(workflowID);
+            var workflowResult = Mapper.Map<WorkFlowDTO>(workFlow);
+            return Ok(workflowResult);
         }
 
         [HttpGet("workFlowId/{workFlowID}/wfStepName/{wfStepName}")]
