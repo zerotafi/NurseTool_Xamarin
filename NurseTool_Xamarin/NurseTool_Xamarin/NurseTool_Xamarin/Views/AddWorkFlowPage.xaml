@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NurseTool_Xamarin.Views.AddWorkFlowPage">
+    <ContentPage.Content>
+        <Grid  BackgroundColor="#def4f7">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="AUTO" />
+                <RowDefinition Height="AUTO" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <ScrollView Orientation="Horizontal" Grid.Row="0" BackgroundColor="#f9fffe">
+                <StackLayout Orientation="Vertical">
+                    <Label Text="Name of the new WorkFlow" />
+                    <StackLayout Orientation="Vertical" Padding="15">
+                        <Label Text="Name:"/>
+                        <Entry Text ="{Binding WFName}" MinimumWidthRequest="30" Keyboard="Numeric" WidthRequest="30" PlaceholderColor="#3498DB"
+                          TextColor="Black"/>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+            <StackLayout Grid.Row="2" Orientation="Vertical" Padding="5">
+                <Button Grid.Row ="2" Text ="Create" Clicked="WFCreateClick" BackgroundColor="#447b9b"/>
+                <Button Grid.Row ="2" Text ="Cancel" Clicked="WFCancelClick" BackgroundColor="#447b9b"/>
+            </StackLayout>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>

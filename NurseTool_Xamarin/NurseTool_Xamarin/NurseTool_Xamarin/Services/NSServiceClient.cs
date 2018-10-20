@@ -191,7 +191,7 @@ namespace NurseTool_Xamarin.Services
             return Items;
         }
 
-        public async Task<WorkFlow> CreateNewWF(User user, int patientId, string wfName)
+        public async Task<bool> CreateNewWF(User user, int patientId, string wfName)
         {
             string requestString = string.Format("/api/workflow/patient/{0}/userInfo/{1}//WFName/{2}", patientId, user.Username, wfName);
             var request = new RestRequest(requestString, Method.GET);
@@ -200,7 +200,7 @@ namespace NurseTool_Xamarin.Services
             var content = response.Content;
             Item = JsonConvert.DeserializeObject<WorkFlow>(content);
 
-            return Item;
+            return response.StatusCode == System.Net.HttpStatusCode.OK;
         }
         public async Task<bool> AddWorkFlowStepToWorkFlow(int wfID, string WFStepName)
         {

@@ -50,8 +50,7 @@ namespace NurseTool_Xamarin.Views
 
         private void WorkFlowAddButtonClicked(object sender, EventArgs e)
         {
-            if (vm.SelectedWorkFlow != null)
-                Navigation.PushAsync(new Views.WorkFlowDetailPage(myPatient, myUser, vm.SelectedWorkFlow));
+                Navigation.PushAsync(new Views.AddWorkFlowPage(myPatient, myUser));
         }
         
 
