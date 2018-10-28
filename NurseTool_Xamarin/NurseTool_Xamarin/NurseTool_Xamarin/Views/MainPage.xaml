@@ -39,14 +39,15 @@
 				Text="{Binding SelectPatientText}" />
             
             <Button 
-				x:Name="NewPatientButton"
+				x:Name="Statistics"
 				Grid.Row="1"
 				Grid.Column="1"
 				BackgroundColor="#447b9b" 
 				BorderRadius="0"
                 FontSize="Small"
 				TextColor="White"
-				Text="{Binding NewPatientText}"/>
+                Clicked="StatisticsButtonClick"
+				Text="Statistics"/>
             
             <Button 
 				x:Name="DataManagementButton"
@@ -59,7 +60,7 @@
 				Text="Data management" />
             
                 <Button 
-				x:Name="temp2"
+				x:Name="workFlowButton"
 				Grid.Row="2"
 				Grid.Column="1"
                 FontSize="Small"

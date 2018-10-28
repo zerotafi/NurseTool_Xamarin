@@ -38,5 +38,11 @@ namespace NurseTool_Xamarin
             Navigation.PushAsync(new Views.PatientListForWorkFlow(myUser));
         }
 
+        private void StatisticsButtonClick(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new Views.PatientDataListForStatisticPage(myUser));
+        }
+
+
     }
 }

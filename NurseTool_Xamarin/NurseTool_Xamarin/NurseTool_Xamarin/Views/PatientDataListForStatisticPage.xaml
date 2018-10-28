@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="NurseTool_Xamarin.Views.PatientDataListForStatisticPage">
+    <ContentPage.Content>
+            <Grid  BackgroundColor="#def4f7">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="AUTO" />
+                    <RowDefinition Height="AUTO" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <StackLayout Grid.Row="0" Orientation="Vertical" Padding="15">
+                    <Label HorizontalOptions="Center" FontSize="Large" Text="Patient list" TextColor="Black" />
+                </StackLayout>
+                <ScrollView Grid.Row ="1" Orientation="Horizontal" BackgroundColor="#f9fffe">
+                    <ListView Grid.Row ="1" ItemSelected="PatientLsitviewItemSelected" IsPullToRefreshEnabled="True"
+                          Refreshing="ExecuteLoadPatients" RefreshCommand="{Binding LoadPatientsCommand}" 
+                          IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                    ItemsSource="{Binding PatietnList}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Text ="{Binding name}" Detail="{Binding id}"
+                          TextColor="Black"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </ScrollView>
+                <StackLayout Grid.Row="2" Orientation="Vertical" Padding="5">
+                    <Button 
+				x:Name="PatientListWorkFlowSelectButton"
+				Grid.Row="2"
+				BackgroundColor="#3498DB"
+				BorderRadius="0"
+				TextColor="White"
+                Clicked="PatientSelectClick"
+				Text="Select" />
+
+                    <Button 
+				x:Name="PatientListWorkFlowSelectCancelButton"
+				Grid.Row="2"
+				BackgroundColor="#3498DB"
+				BorderRadius="0"
+				TextColor="White"
+                Clicked="PatientSelectCancelClick"
+				Text="Cancel" />
+
+                </StackLayout>
+            </Grid>
+    </ContentPage.Content>
+</ContentPage>

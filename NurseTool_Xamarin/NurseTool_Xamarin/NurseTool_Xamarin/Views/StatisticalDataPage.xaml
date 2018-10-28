@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:chart="clr-namespace:Microcharts;assembly=Microcharts"
+             x:Class="NurseTool_Xamarin.Views.StatisticalDataPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <!--<chart:BarChart Entries="" MaxValue="" MinValue=""/>-->
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
