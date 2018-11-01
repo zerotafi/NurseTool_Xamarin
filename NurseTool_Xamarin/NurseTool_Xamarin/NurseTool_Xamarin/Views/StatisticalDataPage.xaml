@@ -1,11 +1,35 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:chart="clr-namespace:Microcharts;assembly=Microcharts"
+             xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              x:Class="NurseTool_Xamarin.Views.StatisticalDataPage">
     <ContentPage.Content>
-        <StackLayout>
-            <!--<chart:BarChart Entries="" MaxValue="" MinValue=""/>-->
-        </StackLayout>
+        <Grid  BackgroundColor="#def4f7">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="20" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="20" />
+            </Grid.ColumnDefinitions>
+            <StackLayout Grid.Row="1" Grid.Column="1">
+
+                <ScrollView Grid.Row="1" Grid.Column="1" Orientation="Both" BackgroundColor="#f9fffe">
+                    <StackLayout Grid.Row="1" Grid.Column="1" Orientation="Vertical">
+                        <Label Grid.Row="1" Grid.Column="1" Text="   Body temperature data" />
+                        <forms:ChartView Grid.Row="1" Grid.Column="1" x:Name="BodyTempChart" Chart="{Binding ChartData}" HeightRequest="200"  WidthRequest="400"/>
+
+                        <Label Text="   SPO2 data" Grid.Row="1" Grid.Column="1" />
+                        <forms:ChartView Grid.Row="1" Grid.Column="1"  x:Name="BodySPOChart" Chart="{Binding ChartData}" HeightRequest="200"  WidthRequest="400" />
+
+                        <Label Grid.Row="1" Grid.Column="1" Text="   Mean Blood Pressure data" />
+                        <forms:ChartView Grid.Row="1" Grid.Column="1" x:Name="BodyBloodChart" Chart="{Binding ChartData}" HeightRequest="200" WidthRequest="400" />
+                    </StackLayout>
+                </ScrollView>
+
+            </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>
